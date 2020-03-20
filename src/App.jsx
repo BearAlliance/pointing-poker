@@ -1,10 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.scss';
 import { Nav } from './nav/nav';
 import { Loading } from './loading/loading';
@@ -24,6 +19,10 @@ function RouteWithSubRoutes(route) {
 
 function App() {
   const routes = [
+    {
+      path: '/game/:gameId',
+      component: lazy(() => import('./pages/game/game-page'))
+    },
     {
       path: '/',
       component: lazy(() => import('./pages/home/home-page'))

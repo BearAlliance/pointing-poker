@@ -4,12 +4,17 @@
   "private": true,
   "dependencies": {
     "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "debug": "^4.1.1",
     "express": "^4.17.1",
+    "http-errors": "^1.7.3",
     "morgan": "^1.9.1"
   },
   "scripts": {
-    "start": "node server.js",
-    "start:dev": "react-scripts start",
+    "start": "node server/server.js",
+    "start:dev": "concurrently -k -n 'server,browser' 'npm run start:dev:server' 'npm run start:dev:browser'",
+    "start:dev:server": "nodemon ./server/bin/www --watch server",
+    "start:dev:browser": "react-scripts start",
     "build": "react-scripts build",
     "test": "npm run prettier:check && react-scripts test",
     "eject": "react-scripts eject",
@@ -20,6 +25,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": "http://localhost:4000",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -43,12 +49,14 @@
     "@types/react": "^16.9.23",
     "bulma": "^0.8.0",
     "classnames": "^2.2.6",
+    "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
