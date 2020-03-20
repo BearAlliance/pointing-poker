@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
 import { NewGameButton } from './new-game-button';
+import { JoinGameButton } from './join-game-button';
 
 export function Nav() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
@@ -35,7 +36,7 @@ export function Nav() {
           <div className="navbar-item">
             <div className="buttons">
               <NewGameButton />
-              <button className="button">Join a session</button>
+              <JoinGameButton />
             </div>
           </div>
         </div>

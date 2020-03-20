@@ -2,17 +2,20 @@ import React, { Fragment } from 'react';
 import { useField } from 'formik';
 import classNames from 'classnames';
 
-export function TextInputWithButton({ name, label, buttonLabel, onButtonClick, loading }) {
+export function TextInputWithButton({ name, label, buttonLabel, onButtonClick, loading, placeholder }) {
   const [field] = useField(name);
 
   return (
     <Fragment>
-      <label htmlFor={name} className="label">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={name} className="label">
+          {label}
+        </label>
+      )}
       <div className="field has-addons">
         <div className="control">
           <input
+            placeholder={placeholder}
             name={name}
             className="input"
             type="text"
