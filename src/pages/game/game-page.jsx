@@ -5,6 +5,7 @@ import { PlayersTable } from './players-table';
 import { GameNotFound } from './game-not-found';
 import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
+import { connectSocket } from '../../websocket-client';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -17,6 +18,12 @@ export default function GamePage({ match }) {
     getGameData(match.params.gameId);
     setGameId(match.params.gameId);
   }, [match]);
+
+  function connectWebSocket(pid, gid) {
+    connectSocket(gid, pid, dataMessage => {
+      console.log('Got a message from the server', dataMessage.data);
+    });
+  }
 
   function getGameData(currentGameId) {
     fetch(`/api/game/${currentGameId}`)
@@ -63,6 +70,7 @@ export default function GamePage({ match }) {
                   onComplete={newPlayerId => {
                     setPlayerId(newPlayerId);
                     getGameData(gameId);
+                    connectWebSocket(newPlayerId, gameId);
                   }}
                 />
               </div>
