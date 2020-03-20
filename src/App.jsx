@@ -20,6 +20,10 @@ function RouteWithSubRoutes(route) {
 function App() {
   const routes = [
     {
+      path: '/game/create',
+      component: lazy(() => import('./pages/game/create-game-page'))
+    },
+    {
       path: '/game/:gameId',
       component: lazy(() => import('./pages/game/game-page'))
     },
@@ -34,11 +38,13 @@ function App() {
       <Nav />
       <div className="page-content">
         <Suspense fallback={<Loading />}>
-          <Switch>
-            {routes.map((route, i) => (
-              <RouteWithSubRoutes key={i} {...route} />
-            ))}
-          </Switch>
+          <div className="container">
+            <Switch>
+              {routes.map((route, i) => (
+                <RouteWithSubRoutes key={i} {...route} />
+              ))}
+            </Switch>
+          </div>
         </Suspense>
       </div>
       <Footer />

@@ -13,7 +13,7 @@
   "scripts": {
     "start": "node server/server.js",
     "start:dev": "concurrently -k -n 'server,browser' 'npm run start:dev:server' 'npm run start:dev:browser'",
-    "start:dev:server": "nodemon ./server/bin/www --watch server",
+    "start:dev:server": "nodemon --exec babel-node ./server/bin/www --watch server",
     "start:dev:browser": "react-scripts start",
     "build": "react-scripts build",
     "test": "npm run prettier:check && react-scripts test",
@@ -39,6 +39,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@testing-library/jest-dom": "^4.2.4",
@@ -53,6 +57,7 @@
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-react": "^7.19.0",
+    "formik": "^2.1.4",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "node-sass": "^4.13.1",
@@ -61,7 +66,8 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "yup": "^0.28.3"
   },
   "husky": {
     "hooks": {
