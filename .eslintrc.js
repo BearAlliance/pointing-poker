@@ -5,11 +5,7 @@ module.exports = {
     browser: true,
     es6: true
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'eslint-config-prettier'
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'eslint-config-prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -17,7 +13,8 @@ module.exports = {
     test: 'readonly',
     expect: 'readonly',
     require: 'readonly',
-    __dirname: 'readonly'
+    __dirname: 'readonly',
+    module: 'readonly'
   },
   parserOptions: {
     ecmaFeatures: {
