@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
+import { NewGameButton } from './new-game-button';
 
 export function Nav() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
@@ -33,9 +34,7 @@ export function Nav() {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Link to="/game/create">
-                <button className="button is-success">Start a session</button>
-              </Link>
+              <NewGameButton />
               <button className="button">Join a session</button>
             </div>
           </div>

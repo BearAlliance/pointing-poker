@@ -2,7 +2,6 @@ import React from 'react';
 import { useField } from 'formik';
 
 export function TextInput({ name, label }) {
-  console.log('name', name);
   const [field] = useField(name);
 
   return (

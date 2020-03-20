@@ -20,10 +20,6 @@ function RouteWithSubRoutes(route) {
 function App() {
   const routes = [
     {
-      path: '/game/create',
-      component: lazy(() => import('./pages/game/create-game-page'))
-    },
-    {
       path: '/game/:gameId',
       component: lazy(() => import('./pages/game/game-page'))
     },

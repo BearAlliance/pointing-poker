@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
-import classNames from 'classnames';
+import { ErrorMessage, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { TextInput } from '../../inputs/text-input';
-import { Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import { TextInputWithButton } from '../../inputs/text-with-button';
 
-export default function CreateGamePage() {
-  const [isDone, setIsDone] = useState(false);
+export function AddPlayer({ gameId, onComplete }) {
   const [hasError, setHasError] = useState(false);
 
   function handleSubmit(values, { setSubmitting }) {
     setHasError(false);
-    fetch(`/api/game/create/${values.firstName}`, { method: 'POST' })
+    fetch(`/api/game/addPlayer/${gameId}/${values.firstName}`, { method: 'POST' })
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -19,7 +16,7 @@ export default function CreateGamePage() {
         return Promise.reject(res);
       })
       .then(() => {
-        setIsDone(true);
+        onComplete(values.firstName);
       })
       .catch(() => {
         setHasError(true);
@@ -28,19 +25,8 @@ export default function CreateGamePage() {
         setSubmitting(false);
       });
   }
-
-  if (isDone) {
-    return <Redirect to="/" />;
-  }
-
   return (
     <div>
-      <div className="hero">
-        <div className="hero-body">
-          <h1 className="title">Create a new game</h1>
-        </div>
-      </div>
-
       {hasError && (
         <div className="notification is-danger">
           <button className="delete" onClick={() => setHasError(false)}></button>
@@ -60,12 +46,8 @@ export default function CreateGamePage() {
             onSubmit={handleSubmit}>
             {({ isSubmitting }) => (
               <Form>
-                <TextInput name="firstName" label="Name" />
+                <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
                 <ErrorMessage name="firstName" component="div" />
-
-                <button className={classNames('button', 'is-success', { 'is-loading': isSubmitting })} type="submit">
-                  Go!
-                </button>
               </Form>
             )}
           </Formik>

@@ -1,4 +1,4 @@
-import { games } from '../state';
+import { games } from '../../state';
 
 const express = require('express');
 const router = express.Router();
@@ -37,33 +37,32 @@ function getGame(req, res, next) {
   }
 }
 
-function addUserToGame(req, res) {
+function addPlayerToGame(req, res) {
   const { name } = req.params;
 
-  req.game.users.push({ name });
+  req.game.players.push({ name });
   res.status(201).json(req.game);
 }
 
-router.post('/game/create/:nameOfCreator', (req, res) => {
+function sendGameInfo(req, res) {
+  res.json(req.game);
+}
+
+router.post('/game/create', (req, res) => {
   const newGameId = getNewGameId();
 
   games[newGameId] = {
+    id: newGameId,
     started: true,
     startTime: new Date().getTime(),
-    users: [
-      {
-        name: req.params.nameOfCreator
-      }
-    ]
+    players: []
   };
 
   res.json(games[newGameId]);
 });
 
-router.post('/game/addUser/:gameId/:name', getGame, addUserToGame);
+router.post('/game/addPlayer/:gameId/:name', getGame, addPlayerToGame);
 
-router.get('/game/:gameId', function(req, res) {
-  res.json({ id: req.params.gameId });
-});
+router.get('/game/:gameId', getGame, sendGameInfo);
 
 module.exports = router;
