@@ -1,10 +1,14 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInputWithButton } from '../../inputs/text-with-button';
 
 export function AddPlayer({ gameId, onComplete }) {
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [gameId]);
 
   function handleSubmit(values, { setSubmitting }) {
     setHasError(false);

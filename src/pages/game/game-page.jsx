@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AddPlayer } from './add-player';
+import { GameTitle } from './game-title';
+import { PlayersTable } from './players-table';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -24,11 +26,7 @@ export default function GamePage({ match }) {
 
   return (
     <div>
-      <div className="hero">
-        <div className="hero-body">
-          <h1 className="title">Game {gameId}</h1>
-        </div>
-      </div>
+      <GameTitle gameId={gameId} />
 
       {!playerId && (
         <AddPlayer
@@ -43,21 +41,7 @@ export default function GamePage({ match }) {
       <div className="columns">
         <div className="column" />
         <div className="column">
-          <table className="table">
-            <thead>
-              <tr>
-                <td>Name</td>
-                <td>Points</td>
-              </tr>
-            </thead>
-            <tbody>
-              {players.map(player => (
-                <tr key={player.name}>
-                  <td>{player.name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <PlayersTable players={players} />
         </div>
         <div className="column" />
       </div>
