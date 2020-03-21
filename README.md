@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pointing Poker
+
+Everything's made up, but the points still matter
+
+[![Build Status](https://travis-ci.org/BearAlliance/pointing-poker.svg?branch=master)](https://travis-ci.org/BearAlliance/pointing-poker)
+
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 ## Available Scripts
 
