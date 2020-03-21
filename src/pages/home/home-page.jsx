@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 function HomeLevel() {
   return (
@@ -36,7 +35,7 @@ export default function HomePage() {
       <section className="hero splash">
         <div className="hero-body has-text-centered-mobile">
           <h1 className="title splash-text">Pointing Poker</h1>
-          <h2 className="subtitle">Where everything's made up but the points still matter</h2>
+          <h2 className="subtitle">Where everything&apos;s made up but the points still matter</h2>
         </div>
       </section>
 
