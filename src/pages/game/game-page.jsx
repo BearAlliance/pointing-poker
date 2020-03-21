@@ -3,6 +3,7 @@ import { AddPlayer } from './add-player';
 import { GameTitle } from './game-title';
 import { PlayersTable } from './players-table';
 import { GameNotFound } from './game-not-found';
+import { VotingButtons } from './voting-buttons';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -43,6 +44,7 @@ export default function GamePage({ match }) {
       <div className="columns">
         <div className="column">
           <GameTitle gameId={gameId} />
+          {playerId && <VotingButtons />}
           <PlayersTable players={players} />
         </div>
 
