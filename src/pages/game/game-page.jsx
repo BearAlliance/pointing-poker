@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { AddPlayer } from './add-player';
 import { GameTitle } from './game-title';
 import { PlayersTable } from './players-table';
 import { GameNotFound } from './game-not-found';
 import { VotingButtons } from './voting-buttons';
+import { StoryTitleSection } from './story-title-section';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -44,7 +45,12 @@ export default function GamePage({ match }) {
       <div className="columns">
         <div className="column">
           <GameTitle gameId={gameId} />
-          {playerId && <VotingButtons />}
+          {playerId && (
+            <Fragment>
+              <StoryTitleSection />
+              <VotingButtons />
+            </Fragment>
+          )}
           <PlayersTable players={players} />
         </div>
 
