@@ -20,7 +20,7 @@
     "eject": "react-scripts eject",
     "prettier": "prettier --ignore-path .gitignore **/*.{js,jsx,md}",
     "prettier:check": "npm run prettier -- --check",
-    "prettier:write": "npm run prettier -- --write"
+    "prettier:fix": "npm run prettier -- --write"
   },
   "eslintConfig": {
     "extends": "react-app"
