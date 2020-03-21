@@ -31,7 +31,6 @@ function HomeLevel() {
 }
 
 export default function HomePage() {
-
   return (
     <div className="home-page">
       <section className="hero splash">
@@ -45,12 +44,9 @@ export default function HomePage() {
 
       <section className="section">
         <div className="container">
-          <h2 className="subtitle">
-            Lorem Ipsum this is a description
-          </h2>
+          <h2 className="subtitle">Lorem Ipsum this is a description</h2>
         </div>
       </section>
-
     </div>
   );
 }

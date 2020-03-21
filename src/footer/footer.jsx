@@ -7,7 +7,7 @@ export function Footer() {
     {
       href: 'https://www.github.com',
       icon: 'fa-github'
-    },
+    }
   ];
 
   return (
@@ -19,8 +19,7 @@ export function Footer() {
               <strong>Pointing Poker</strong>
             </div>
             <div className=" has-text-secondary">
-              ©<a href="http://nickcacace.com">Nick Cacace</a>{' '}
-              {new Date().getFullYear()}
+              ©<a href="http://nickcacace.com">Nick Cacace</a> {new Date().getFullYear()}
             </div>
           </div>
           <div className="is-pulled-right">

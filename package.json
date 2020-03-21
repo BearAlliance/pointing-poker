@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "npm run prettier:check && react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --ignore-path .gitignore **/*.{js,jsx,md}",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.{js,jsx,md}\"",
     "prettier:check": "npm run prettier -- --check",
     "prettier:fix": "npm run prettier -- --write"
   },
