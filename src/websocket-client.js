@@ -3,7 +3,8 @@ var W3CWebSocket = require('websocket').w3cwebsocket;
 var client;
 
 export function connectSocket(gameId, playerId, cb) {
-  client = new W3CWebSocket(`ws://localhost:4000/?gid=${gameId}&pid=${playerId}`, 'da-game');
+  client = new W3CWebSocket(`ws://localhost:4000/socket/echo`, 'da-game');
+  // client = new W3CWebSocket(`ws://localhost:4000/?gid=${gameId}&pid=${playerId}`, 'da-game');
 
   client.onerror = e => {
     console.log('ERROR: WebSocket Client', e);

@@ -21,7 +21,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-createWebSocket(server);
+// createWebSocket(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -88,4 +88,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on ' + bind)
 }
