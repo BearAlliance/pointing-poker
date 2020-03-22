@@ -1,4 +1,4 @@
-import express from'express';
+import express from 'express';
 import { games } from '../../state';
 
 const router = express.Router();

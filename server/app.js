@@ -1,13 +1,12 @@
-import express from'express';
+import express from 'express';
+import expressWs from 'express-ws';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { getSocketRouter } from './routes/sockets';
-import { gamesRouter} from './routes/games';
+import { gamesRouter } from './routes/games';
 
 const app = express();
-
-import expressWs from 'express-ws';
 expressWs(app);
 
 function registerMiddleware() {
@@ -39,7 +38,7 @@ function registerRouters() {
 }
 
 registerMiddleware();
-// registerStatic();
+registerStatic();
 registerRouters();
 
 module.exports = app;

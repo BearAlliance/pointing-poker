@@ -6,8 +6,6 @@
 
 var app = require('../app');
 var debug = require('debug')('express-gen:server');
-var http = require('http');
-var { createWebSocket } = require('../websocket-server');
 
 /**
  * Get port from environment and store in Express.
@@ -17,16 +15,12 @@ var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-// createWebSocket(server);
-/**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+// see https://github.com/HenningM/express-ws/pull/108/files
+var server = app.listen(port);
+
 server.on('error', onError);
 server.on('listening', onListening);
 
