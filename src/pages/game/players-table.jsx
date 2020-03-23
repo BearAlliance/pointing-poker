@@ -17,6 +17,7 @@ export function PlayersTable({ players }) {
         {players.map(player => (
           <tr key={player.name}>
             <td>{player.name}</td>
+            <td>{player.points}</td>
           </tr>
         ))}
       </tbody>

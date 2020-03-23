@@ -5,13 +5,14 @@ import { PlayersTable } from './players-table';
 import { GameNotFound } from './game-not-found';
 import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
-import { connectSocket } from '../../websocket-client';
+import { PokerSocket } from '../../websocket-client';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [players, setPlayers] = useState([]);
   const [hasError, setHasError] = useState(null);
+  const [socket] = useState(new PokerSocket());
 
   useEffect(() => {
     setPlayerId(null);
@@ -20,9 +21,14 @@ export default function GamePage({ match }) {
   }, [match]);
 
   function connectWebSocket(pid, gid) {
-    connectSocket(gid, pid, dataMessage => {
-      console.log('Got a message from the server', dataMessage.data);
+    socket.register(gid, pid, data => {
+      console.log('Got a message from the server', data);
+      setPlayers(data.game.players);
     });
+  }
+
+  function vote(points) {
+    socket.vote(points);
   }
 
   function getGameData(currentGameId) {
@@ -55,7 +61,7 @@ export default function GamePage({ match }) {
           {playerId && (
             <Fragment>
               <StoryTitleSection />
-              <VotingButtons />
+              <VotingButtons onSelected={points => vote(points)} />
             </Fragment>
           )}
           <PlayersTable players={players} />

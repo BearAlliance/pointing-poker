@@ -7,7 +7,7 @@ import { getSocketRouter } from './routes/sockets';
 import { gamesRouter } from './routes/games';
 
 const app = express();
-expressWs(app);
+const ws = expressWs(app);
 
 function registerMiddleware() {
   app.use(logger('dev'));
@@ -34,7 +34,7 @@ function registerStatic() {
 
 function registerRouters() {
   app.use('/api/', gamesRouter);
-  app.use('/socket/', getSocketRouter());
+  app.use('/socket/', getSocketRouter(ws));
 }
 
 registerMiddleware();
