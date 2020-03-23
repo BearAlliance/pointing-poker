@@ -3,16 +3,15 @@ const router = express.Router();
 import { games } from '../../state';
 
 export function getSocketRouter(expressWs) {
-  console.log('registered websocket serverside route');
-
-  router.ws('/echo', function(ws /*, req */) {
+  router.ws('/poker', function(ws) {
     ws.on('message', function(msg) {
       let message = JSON.parse(msg);
       let game = games[message.gameId];
 
       if (message.action === 'join') {
-        // add the user to the game
-        // TODO: they are already there because of POST
+        // TODO: add the user to the game
+        // FIXME: they are already there because of POST
+        ws.gameId = game.id;
         ws.send(
           JSON.stringify({
             game: game
@@ -27,17 +26,17 @@ export function getSocketRouter(expressWs) {
         ws.send(message);
       }
 
-      // send game update to everyone
-      // TODO: only send it to the clients that are in THIS game
-      expressWs.getWss('/socket/echo').clients.forEach(client => {
-        client.send(
-          JSON.stringify({
-            game: game
-          })
-        );
-      });
+      broadcastGameUpdate(game);
     });
   });
+
+  function broadcastGameUpdate(game) {
+    expressWs.getWss('/socket/poker').clients.forEach(client => {
+      if (client.gameId === game.id) {
+        client.send(JSON.stringify({ game }));
+      }
+    });
+  }
 
   return router;
 }

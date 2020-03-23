@@ -5,14 +5,14 @@ import { PlayersTable } from './players-table';
 import { GameNotFound } from './game-not-found';
 import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
-import { PokerSocket } from '../../websocket-client';
+import { WebSocketClient } from '../../websocket-client';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [players, setPlayers] = useState([]);
   const [hasError, setHasError] = useState(null);
-  const [socket] = useState(new PokerSocket());
+  const [socket] = useState(new WebSocketClient());
 
   useEffect(() => {
     setPlayerId(null);

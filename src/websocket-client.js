@@ -1,8 +1,8 @@
 var W3CWebSocket = require('websocket').w3cwebsocket;
 
-export class PokerSocket {
+export class WebSocketClient {
   register = (gameId, playerId, cb) => {
-    this.client = new W3CWebSocket(`ws://localhost:4000/socket/echo`);
+    this.client = new W3CWebSocket(`ws://${document.location.hostname}:4000/socket/poker`);
     this.gameId = gameId;
     this.playerId = playerId;
     this.cb = cb;
