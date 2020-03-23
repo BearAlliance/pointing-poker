@@ -7,8 +7,10 @@
     "cookie-parser": "^1.4.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "express-ws": "^4.0.0",
     "http-errors": "^1.7.3",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "websocket": "^1.0.31"
   },
   "scripts": {
     "start": "node server/server.js",

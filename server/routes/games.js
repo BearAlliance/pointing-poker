@@ -1,6 +1,6 @@
+import express from 'express';
 import { games } from '../../state';
 
-const express = require('express');
 const router = express.Router();
 
 function padZeros(int, desiredLength) {
@@ -65,4 +65,4 @@ router.post('/game/addPlayer/:gameId/:name', getGame, addPlayerToGame);
 
 router.get('/game/:gameId', getGame, sendGameInfo);
 
-module.exports = router;
+export const gamesRouter = router;
