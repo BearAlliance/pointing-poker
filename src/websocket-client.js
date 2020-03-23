@@ -11,28 +11,26 @@ export class WebSocketClient {
 
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
-        this.client.send(
-          JSON.stringify({
-            action: 'JOIN',
-            gameId,
-            playerId
-          })
-        );
+        this.client.send(this.createMessage('JOIN'));
       } else {
-        console.log('WebSocket not ready yet... we shouldnt be here, if we are, we need a setTimeout maybe');
+        console.log('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }
     };
   };
 
   vote = points => {
-    this.client.send(
-      JSON.stringify({
-        action: 'VOTE',
-        gameId: this.gameId,
-        playerId: this.playerId,
-        points
-      })
-    );
+    this.client.send(this.createMessage('VOTE', { points }));
+  };
+
+  createMessage = (action, overrides) => {
+    let message = {
+      action,
+      gameId: this.gameId,
+      playerId: this.playerId,
+      ...overrides
+    };
+
+    return JSON.stringify(message);
   };
 
   connectSocket = () => {
