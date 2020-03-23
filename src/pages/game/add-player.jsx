@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import React, { useEffect, useState } from 'react';
 import { TextInputWithButton } from '../../inputs/text-with-button';
 
-export function AddPlayer({ gameId, onComplete }) {
+export function AddPlayer({ gameId, addFn }) {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -12,23 +12,16 @@ export function AddPlayer({ gameId, onComplete }) {
 
   function handleSubmit(values, { setSubmitting }) {
     setHasError(false);
-    fetch(`/api/game/addPlayer/${gameId}/${values.firstName}`, { method: 'POST' })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(res);
-      })
-      .then(() => {
-        onComplete(values.firstName);
-      })
-      .catch(() => {
+    addFn(values.firstName, gameId, data => {
+      if (data.error) {
+        // TODO add error handling on server responses / client socket
+        console.log('Erorr back from addFn', data);
         setHasError(true);
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+      }
+      setSubmitting(false);
+    });
   }
+
   return (
     <div>
       {hasError && (

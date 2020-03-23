@@ -13,7 +13,7 @@ export class WebSocketClient {
       if (this.client.readyState === this.client.OPEN) {
         this.client.send(
           JSON.stringify({
-            action: 'join',
+            action: 'JOIN',
             gameId,
             playerId
           })
@@ -27,7 +27,7 @@ export class WebSocketClient {
   vote = points => {
     this.client.send(
       JSON.stringify({
-        action: 'vote',
+        action: 'VOTE',
         gameId: this.gameId,
         playerId: this.playerId,
         points

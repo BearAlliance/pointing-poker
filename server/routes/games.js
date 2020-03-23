@@ -37,13 +37,6 @@ function getGame(req, res, next) {
   }
 }
 
-function addPlayerToGame(req, res) {
-  const { name } = req.params;
-
-  req.game.players.push({ name });
-  res.status(201).json(req.game);
-}
-
 function sendGameInfo(req, res) {
   res.json(req.game);
 }
@@ -60,8 +53,6 @@ router.post('/game/create', (req, res) => {
 
   res.json(games[newGameId]);
 });
-
-router.post('/game/addPlayer/:gameId/:name', getGame, addPlayerToGame);
 
 router.get('/game/:gameId', getGame, sendGameInfo);
 
