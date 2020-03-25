@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "start:dev": "concurrently -k -n 'server,browser' 'npm run start:dev:server' 'npm run start:dev:browser'",
+    "start:dev": "concurrently -k -n 'server,client' 'npm run start:dev:server' 'npm run start:dev:browser'",
     "start:dev:server": "nodemon --exec babel-node ./server/bin/www --watch server",
     "start:dev:browser": "react-scripts start",
     "build": "react-scripts build",
