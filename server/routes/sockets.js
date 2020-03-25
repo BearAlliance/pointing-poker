@@ -8,16 +8,24 @@ export function getSocketRouter(expressWs) {
       let message = JSON.parse(msg);
       let game = games[message.gameId];
 
-      if (message.action === 'JOIN') {
-        game.players.push({ name: message.playerId });
-        ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
-      } else if (message.action === 'VOTE') {
-        // find the user and update their vote
-        game.players.find(player => player.name === message.playerId).points = message.points;
-      } else {
-        // fallback
-        console.log('got message', message);
-        ws.send(message);
+      switch (message.action) {
+        case 'JOIN':
+          game.players.push({ name: message.playerId });
+          ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
+          break;
+        case 'VOTE':
+          // find the user and update their vote
+          game.players.find(player => player.name === message.playerId).points = message.points;
+          break;
+        case 'RESET':
+          console.log('reset called');
+          game.players.forEach(player => {
+            delete player.points;
+          });
+          break;
+        default:
+          console.log('got message', message);
+          ws.send(message);
       }
 
       broadcastGameUpdate(game);

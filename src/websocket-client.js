@@ -22,6 +22,10 @@ export class WebSocketClient {
     this.client.send(this.createMessage('VOTE', { points }));
   };
 
+  reset = () => {
+    this.client.send(this.createMessage('RESET'));
+  };
+
   createMessage = (action, overrides) => {
     let message = {
       action,
