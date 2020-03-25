@@ -11,42 +11,40 @@ export class WebSocketClient {
 
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
-        this.client.send(
-          JSON.stringify({
-            action: 'join',
-            gameId,
-            playerId
-          })
-        );
+        this.client.send(this.createMessage('JOIN'));
       } else {
-        console.log('WebSocket not ready yet... we shouldnt be here, if we are, we need a setTimeout maybe');
+        console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }
     };
   };
 
   vote = points => {
-    this.client.send(
-      JSON.stringify({
-        action: 'vote',
-        gameId: this.gameId,
-        playerId: this.playerId,
-        points
-      })
-    );
+    this.client.send(this.createMessage('VOTE', { points }));
+  };
+
+  createMessage = (action, overrides) => {
+    let message = {
+      action,
+      gameId: this.gameId,
+      playerId: this.playerId,
+      ...overrides
+    };
+
+    return JSON.stringify(message);
   };
 
   connectSocket = () => {
     this.client.onerror = e => {
-      console.log('ERROR: WebSocket Client', e);
+      console.error('ERROR: WebSocket Client', e);
     };
 
     this.client.onmessage = message => {
-      console.log('WebSocket calling cb with ', JSON.parse(message.data));
+      console.debug('WebSocket calling cb with ', JSON.parse(message.data));
       this.cb(JSON.parse(message.data));
     };
 
     this.client.onclose = function() {
-      console.log('WebSocket Client Closed');
+      console.info('WebSocket Client Closed');
       this.client = undefined;
     };
   };

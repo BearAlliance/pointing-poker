@@ -8,16 +8,10 @@ export function getSocketRouter(expressWs) {
       let message = JSON.parse(msg);
       let game = games[message.gameId];
 
-      if (message.action === 'join') {
-        // TODO: add the user to the game
-        // FIXME: they are already there because of POST
-        ws.gameId = game.id;
-        ws.send(
-          JSON.stringify({
-            game: game
-          })
-        );
-      } else if (message.action === 'vote') {
+      if (message.action === 'JOIN') {
+        game.players.push({ name: message.playerId });
+        ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
+      } else if (message.action === 'VOTE') {
         // find the user and update their vote
         game.players.find(player => player.name === message.playerId).points = message.points;
       } else {

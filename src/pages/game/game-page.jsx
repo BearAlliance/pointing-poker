@@ -20,15 +20,22 @@ export default function GamePage({ match }) {
     setGameId(match.params.gameId);
   }, [match]);
 
-  function connectWebSocket(pid, gid) {
-    socket.register(gid, pid, data => {
-      console.log('Got a message from the server', data);
-      setPlayers(data.game.players);
-    });
-  }
-
   function vote(points) {
     socket.vote(points);
+  }
+
+  function joinGame(pid, gid, errorCallback) {
+    setPlayerId(pid);
+    setGameId(gid);
+
+    socket.register(gid, pid, data => {
+      console.log('Got a message from the server', data);
+      if (data.error) {
+        errorCallback(data);
+      } else {
+        setPlayers(data.game.players);
+      }
+    });
   }
 
   function getGameData(currentGameId) {
@@ -71,14 +78,7 @@ export default function GamePage({ match }) {
           {!playerId && (
             <div className="hero">
               <div className="hero-body">
-                <AddPlayer
-                  gameId={gameId}
-                  onComplete={newPlayerId => {
-                    setPlayerId(newPlayerId);
-                    getGameData(gameId);
-                    connectWebSocket(newPlayerId, gameId);
-                  }}
-                />
+                <AddPlayer gameId={gameId} joinGame={joinGame} />
               </div>
             </div>
           )}
