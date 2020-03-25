@@ -68,6 +68,11 @@ export default function GamePage({ match }) {
           {playerId && (
             <Fragment>
               <StoryTitleSection />
+              <hr />
+              <button className="button is-danger" onClick={socket.reset}>
+                Clear Votes
+              </button>
+              <hr />
               <VotingButtons onSelected={points => vote(points)} />
               <div className="columns">
                 <div className="column">
