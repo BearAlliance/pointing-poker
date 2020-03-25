@@ -9,6 +9,7 @@ export function PlayersTable({ players }) {
     <table className="table is-striped">
       <thead>
         <tr>
+          <th>Voted</th>
           <th>Name</th>
           <th>Points</th>
         </tr>
@@ -16,8 +17,9 @@ export function PlayersTable({ players }) {
       <tbody>
         {players.map(player => (
           <tr key={player.name}>
+            <td>{player.points ? <i className="fas fa-check has-text-success" /> : null}</td>
             <td>{player.name}</td>
-            <td>{player.points}</td>
+            <td className="has-text-weight-bold">{player.points}</td>
           </tr>
         ))}
       </tbody>

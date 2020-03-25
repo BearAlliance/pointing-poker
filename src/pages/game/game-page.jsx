@@ -11,7 +11,7 @@ import { GameStats } from './game-stats';
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
   const [gameId, setGameId] = useState(null);
-  const [players, setPlayers] = useState([]);
+  const [game, setGame] = useState(null);
   const [hasError, setHasError] = useState(null);
   const [socket] = useState(new WebSocketClient());
 
@@ -34,7 +34,7 @@ export default function GamePage({ match }) {
       if (data.error) {
         errorCallback(data);
       } else {
-        setPlayers(data.game.players);
+        setGame(data.game);
       }
     });
   }
@@ -49,8 +49,7 @@ export default function GamePage({ match }) {
       })
       .then(res => {
         setHasError(false);
-        setGameId(res.id);
-        setPlayers(res.players);
+        setGame(res);
       })
       .catch(() => {
         setHasError(true);
@@ -70,18 +69,16 @@ export default function GamePage({ match }) {
             <Fragment>
               <StoryTitleSection />
               <VotingButtons onSelected={points => vote(points)} />
+              <div className="columns">
+                <div className="column">
+                  <PlayersTable players={game.players} />
+                </div>
+                <div className="column">
+                  <GameStats players={game.players} />
+                </div>
+              </div>
             </Fragment>
           )}
-          <div>
-            <div className="columns">
-              <div className="column">
-                <PlayersTable players={players} />
-              </div>
-              <div className="column">
-                <GameStats players={players} />
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="column">
