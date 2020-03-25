@@ -72,14 +72,19 @@ export default function GamePage({ match }) {
                 onChange={e => socket.updateTitle(e.target.value)}
               />
               <hr />
-              <button className="button is-danger" onClick={socket.reset}>
-                Clear Votes
-              </button>
+              <div className="buttons">
+                <button className="button is-danger" onClick={socket.reset}>
+                  Clear Votes
+                </button>
+                <button className="button is-info" onClick={socket.showVotes}>
+                  Show Votes
+                </button>
+              </div>
               <hr />
               <VotingButtons onSelected={points => vote(points)} />
               <div className="columns">
                 <div className="column">
-                  <PlayersTable me={playerId} players={game.players} />
+                  <PlayersTable me={playerId} players={game.players} showVotes={game.showVotes} />
                 </div>
                 <div className="column">
                   <GameStats players={game.players} />
