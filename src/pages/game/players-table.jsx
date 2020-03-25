@@ -13,7 +13,6 @@ export function PlayersTable({ players, me }) {
     <table className="table is-striped">
       <thead>
         <tr>
-          <th>Voted</th>
           <th>Name</th>
           <th>Points</th>
         </tr>
@@ -21,8 +20,8 @@ export function PlayersTable({ players, me }) {
       <tbody>
         {players.map(player => (
           <tr key={player.name}>
-            <td>{player.points ? <i className="fas fa-check has-text-success" /> : null}</td>
             <td>
+              {player.points && <span className="has-text-success">|</span>}
               {player.name === me ? <i className="fas fa-arrow-right" /> : null}
               {player.name}
             </td>
