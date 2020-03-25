@@ -79,7 +79,7 @@ export default function GamePage({ match }) {
               <VotingButtons onSelected={points => vote(points)} />
               <div className="columns">
                 <div className="column">
-                  <PlayersTable players={game.players} />
+                  <PlayersTable me={playerId} players={game.players} />
                 </div>
                 <div className="column">
                   <GameStats players={game.players} />
