@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function PlayersTable({ players, me }) {
+export function PlayersTable({ players, me, showVotes }) {
   function hasEveryoneVoted() {
     return players.every(player => player.points >= 0);
   }
@@ -25,7 +25,9 @@ export function PlayersTable({ players, me }) {
               {player.name === me ? <i className="fas fa-arrow-right" /> : null}
               {player.name}
             </td>
-            <td className="has-text-weight-bold">{hasEveryoneVoted() || player.name === me ? player.points : '--'}</td>
+            <td className="has-text-weight-bold">
+              {hasEveryoneVoted() || player.name === me || showVotes ? player.points : '--'}
+            </td>
           </tr>
         ))}
       </tbody>

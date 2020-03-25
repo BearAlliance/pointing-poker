@@ -19,12 +19,16 @@ export function getSocketRouter(expressWs) {
           break;
         case 'RESET':
           console.log('reset called');
+          game.showVotes = false;
           game.players.forEach(player => {
             delete player.points;
           });
           break;
         case 'CHANGE_TITLE':
           game.title = message.title;
+          break;
+        case 'SHOW_VOTES':
+          game.showVotes = true;
           break;
         default:
           console.log('got message', message);
