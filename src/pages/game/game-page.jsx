@@ -6,6 +6,7 @@ import { GameNotFound } from './game-not-found';
 import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
 import { WebSocketClient } from '../../websocket-client';
+import { GameStats } from './game-stats';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -71,7 +72,16 @@ export default function GamePage({ match }) {
               <VotingButtons onSelected={points => vote(points)} />
             </Fragment>
           )}
-          <PlayersTable players={players} />
+          <div>
+            <div className="columns">
+              <div className="column">
+                <PlayersTable players={players} />
+              </div>
+              <div className="column">
+                <GameStats players={players} />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="column">
