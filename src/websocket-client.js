@@ -13,7 +13,7 @@ export class WebSocketClient {
       if (this.client.readyState === this.client.OPEN) {
         this.client.send(this.createMessage('JOIN'));
       } else {
-        console.log('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
+        console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }
     };
   };
@@ -35,16 +35,16 @@ export class WebSocketClient {
 
   connectSocket = () => {
     this.client.onerror = e => {
-      console.log('ERROR: WebSocket Client', e);
+      console.error('ERROR: WebSocket Client', e);
     };
 
     this.client.onmessage = message => {
-      console.log('WebSocket calling cb with ', JSON.parse(message.data));
+      console.debug('WebSocket calling cb with ', JSON.parse(message.data));
       this.cb(JSON.parse(message.data));
     };
 
     this.client.onclose = function() {
-      console.log('WebSocket Client Closed');
+      console.info('WebSocket Client Closed');
       this.client = undefined;
     };
   };

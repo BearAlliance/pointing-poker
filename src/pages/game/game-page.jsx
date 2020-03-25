@@ -24,13 +24,17 @@ export default function GamePage({ match }) {
     socket.vote(points);
   }
 
-  function addPlayer(pid, gid, cb) {
+  function joinGame(pid, gid, errorCallback) {
+    setPlayerId(pid);
+    setGameId(gid);
+
     socket.register(gid, pid, data => {
       console.log('Got a message from the server', data);
-      setPlayerId(pid);
-      setGameId(data.game.id);
-      setPlayers(data.game.players);
-      cb(data);
+      if (data.error) {
+        errorCallback(data);
+      } else {
+        setPlayers(data.game.players);
+      }
     });
   }
 
@@ -74,7 +78,7 @@ export default function GamePage({ match }) {
           {!playerId && (
             <div className="hero">
               <div className="hero-body">
-                <AddPlayer gameId={gameId} addFn={addPlayer} />
+                <AddPlayer gameId={gameId} joinGame={joinGame} />
               </div>
             </div>
           )}
