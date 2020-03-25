@@ -23,6 +23,9 @@ export function getSocketRouter(expressWs) {
             delete player.points;
           });
           break;
+        case 'CHANGE_TITLE':
+          game.title = message.title;
+          break;
         default:
           console.log('got message', message);
           ws.send(message);

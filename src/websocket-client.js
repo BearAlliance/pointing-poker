@@ -22,6 +22,10 @@ export class WebSocketClient {
     this.client.send(this.createMessage('VOTE', { points }));
   };
 
+  updateTitle = title => {
+    this.client.send(this.createMessage('CHANGE_TITLE', { title }));
+  };
+
   reset = () => {
     this.client.send(this.createMessage('RESET'));
   };

@@ -67,7 +67,10 @@ export default function GamePage({ match }) {
           <GameTitle gameId={gameId} />
           {playerId && (
             <Fragment>
-              <StoryTitleSection />
+              <StoryTitleSection
+                value={(game && game.title) || ''}
+                onChange={e => socket.updateTitle(e.target.value)}
+              />
               <hr />
               <button className="button is-danger" onClick={socket.reset}>
                 Clear Votes
