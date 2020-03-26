@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasEveryoneVoted } from './game-stats';
+import { hasEveryoneVoted } from './player-stats';
 
 export function PlayersTable({ players, me, showVotes }) {
   if (players.length === 0) {

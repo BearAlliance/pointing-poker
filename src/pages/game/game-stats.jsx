@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasEveryoneVoted } from './game-stats';
+import { hasEveryoneVoted } from './player-stats';
 
 export function GameStats({ players }) {
   // only count people that voted
