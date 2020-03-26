@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+import isEqual from 'lodash.isequal';
 import { games } from '../state';
 
 function isNameAvailable(name, players = []) {
@@ -21,6 +22,7 @@ export function getSocketRouter(expressWs) {
           if (isNameAvailable(message.playerId, game.players)) {
             game.players.push({ name: message.playerId, isGuest: message.isGuest });
             ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
+            ws.player = game.players.find(player => player.name === message.playerId);
           } else {
             // TODO would be "nice" to prevent the broadcast, but no real harm
             ws.send(
@@ -31,7 +33,6 @@ export function getSocketRouter(expressWs) {
           }
           break;
         case 'VOTE':
-          // find the user and update their vote
           game.players.find(player => player.name === message.playerId).points = message.points;
           break;
         case 'RESET':
@@ -57,11 +58,24 @@ export function getSocketRouter(expressWs) {
   });
 
   function broadcastGameUpdate(game) {
+    let connectedPlayers = [];
     expressWs.getWss('/socket/poker').clients.forEach(client => {
       if (client.gameId === game.id) {
         client.send(JSON.stringify({ game }));
+        connectedPlayers.push(client.player);
       }
     });
+
+    removeDisconnectedPlayers(game, connectedPlayers);
+  }
+
+  function removeDisconnectedPlayers(game, connectedPlayers) {
+    if (isEqual(game.players, connectedPlayers)) {
+      game.players = game.players.filter(p => {
+        return connectedPlayers.includes(p.name);
+      });
+      broadcastGameUpdate(game);
+    }
   }
 
   return router;
