@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 import { games } from '../../state';
 
+function isNameAvailable(name, players = []) {
+  return (
+    players.find(p => {
+      return p.name === name;
+    }) === undefined
+  );
+}
+
 export function getSocketRouter(expressWs) {
   router.ws('/poker', function(ws) {
     ws.on('message', function(msg) {
@@ -10,8 +18,17 @@ export function getSocketRouter(expressWs) {
 
       switch (message.action) {
         case 'JOIN':
-          game.players.push({ name: message.playerId });
-          ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
+          if (isNameAvailable(message.playerId, game.players)) {
+            game.players.push({ name: message.playerId });
+            ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
+          } else {
+            // TODO would be "nice" to prevent the broadcast, but no real harm
+            ws.send(
+              JSON.stringify({
+                error: 'Name already taken, try another'
+              })
+            );
+          }
           break;
         case 'VOTE':
           // find the user and update their vote

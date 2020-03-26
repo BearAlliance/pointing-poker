@@ -26,14 +26,13 @@ export default function GamePage({ match }) {
   }
 
   function joinGame(pid, gid, errorCallback) {
-    setPlayerId(pid);
-    setGameId(gid);
-
     socket.register(gid, pid, data => {
       console.log('Got a message from the server', data);
       if (data.error) {
+        setPlayerId(undefined);
         errorCallback(data);
       } else {
+        setPlayerId(pid);
         setGame(data.game);
       }
     });
