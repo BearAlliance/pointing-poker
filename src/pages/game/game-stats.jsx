@@ -1,4 +1,5 @@
 import React from 'react';
+import { hasEveryoneVoted } from './game-stats';
 
 export function GameStats({ players }) {
   // only count people that voted
@@ -52,15 +53,15 @@ export function GameStats({ players }) {
       <tbody>
         <tr>
           <td>Average</td>
-          <td>{getAveragePoints()}</td>
+          <td>{hasEveryoneVoted(players) ? getAveragePoints() : '--'}</td>
         </tr>
         <tr>
           <td>High</td>
-          <td>{getHighPeople()}</td>
+          <td>{hasEveryoneVoted(players) ? getHighPeople() : '--'}</td>
         </tr>
         <tr>
           <td>Low</td>
-          <td>{getLowPeople()}</td>
+          <td>{hasEveryoneVoted(players) ? getLowPeople() : '--'}</td>
         </tr>
       </tbody>
     </table>

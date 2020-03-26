@@ -1,10 +1,7 @@
 import React from 'react';
+import { hasEveryoneVoted } from './game-stats';
 
 export function PlayersTable({ players, me, showVotes }) {
-  function hasEveryoneVoted() {
-    return players.every(player => player.points >= 0);
-  }
-
   if (players.length === 0) {
     return <div>There&apos;s no one here right now</div>;
   }
@@ -28,7 +25,7 @@ export function PlayersTable({ players, me, showVotes }) {
                 {player.name}
               </td>
               <td className="has-text-weight-bold">
-                {hasEveryoneVoted() || player.name === me || showVotes ? player.points : '--'}
+                {hasEveryoneVoted(players) || player.name === me || showVotes ? player.points : '--'}
               </td>
             </tr>
           ))}
