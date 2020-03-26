@@ -24,8 +24,8 @@ export function PlayersTable({ players, me, showVotes }) {
             <tr key={player.name}>
               <td>
                 {player.points && <span className="has-text-success">|</span>}
-                {player.name === me ? <i className="fas fa-arrow-right" /> : null}
                 {player.name}
+                {player.name === me && <span> (you)</span>}
               </td>
               <td className="has-text-weight-bold">
                 {hasEveryoneVoted() || player.name === me || showVotes ? player.points : '--'}
