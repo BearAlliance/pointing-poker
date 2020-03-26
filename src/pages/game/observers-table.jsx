@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function GuestsTable({ players }) {
+export function ObserversTable({ players, me }) {
   if (players.length === 0) {
     return null;
   }
@@ -9,7 +9,7 @@ export function GuestsTable({ players }) {
     <table className="table is-striped">
       <thead>
         <tr>
-          <th>Guests</th>
+          <th>Observers</th>
         </tr>
       </thead>
       <tbody>
@@ -17,7 +17,10 @@ export function GuestsTable({ players }) {
           .filter(player => player.isGuest)
           .map(player => (
             <tr key={player.name}>
-              <td>{player.name}</td>
+              <td>
+                {player.name}
+                {player.name === me && <span> (you)</span>}
+              </td>
             </tr>
           ))}
       </tbody>

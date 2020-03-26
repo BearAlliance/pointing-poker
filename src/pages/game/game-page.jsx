@@ -7,10 +7,11 @@ import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
 import { WebSocketClient } from '../../websocket-client';
 import { GameStats } from './game-stats';
-import { GuestsTable } from './guests-table';
+import { ObserversTable } from './observers-table';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
+  const [isGuest, setIsGuest] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [game, setGame] = useState(null);
   const [hasError, setHasError] = useState(null);
@@ -27,6 +28,7 @@ export default function GamePage({ match }) {
   }
 
   function joinGame(pid, isGuest, gid, errorCallback) {
+    setIsGuest(isGuest);
     socket.register(gid, isGuest, pid, data => {
       console.log('Got a message from the server', data);
       if (data.error) {
@@ -81,11 +83,11 @@ export default function GamePage({ match }) {
                 </button>
               </div>
               <hr />
-              <VotingButtons onSelected={points => vote(points)} />
+              {!isGuest && <VotingButtons onSelected={points => vote(points)} />}
               <div className="columns">
                 <div className="column">
                   <PlayersTable me={playerId} players={game.players} showVotes={game.showVotes} />
-                  <GuestsTable players={game.players} />
+                  <ObserversTable players={game.players} me={playerId} />
                 </div>
                 <div className="column">
                   <GameStats players={game.players} />

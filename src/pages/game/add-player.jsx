@@ -26,7 +26,7 @@ export function AddPlayer({ gameId, joinGame }) {
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <Checkbox name="isGuest" label="Join as guest" />
+            <Checkbox name="isGuest" label="Join as observer" />
             <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
             <ErrorMessage name="firstName">{msg => <div className="has-text-danger">{msg}</div>}</ErrorMessage>
           </Form>
