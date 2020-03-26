@@ -19,7 +19,7 @@ export function getSocketRouter(expressWs) {
       switch (message.action) {
         case 'JOIN':
           if (isNameAvailable(message.playerId, game.players)) {
-            game.players.push({ name: message.playerId });
+            game.players.push({ name: message.playerId, isGuest: message.isGuest });
             ws.gameId = game.id; // asign the gameid to this connection for filtering during broadcast
           } else {
             // TODO would be "nice" to prevent the broadcast, but no real harm
