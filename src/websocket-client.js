@@ -1,8 +1,14 @@
+import { isDevelopment } from './env';
+
 var W3CWebSocket = require('websocket').w3cwebsocket;
 
 export class WebSocketClient {
   register = (gameId, isGuest, playerId, cb) => {
-    this.client = new W3CWebSocket(`ws://${document.location.hostname}:4000/socket/poker`);
+    if (isDevelopment()) {
+      this.client = new W3CWebSocket(`ws://${document.location.hostname}:4000/socket/poker`);
+    } else {
+      this.client = new W3CWebSocket(`wss://${document.location.hostname}/socket/poker`);
+    }
     this.gameId = gameId;
     this.playerId = playerId;
     this.cb = cb;
