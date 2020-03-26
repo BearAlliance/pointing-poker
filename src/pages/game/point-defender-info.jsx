@@ -29,11 +29,17 @@ export function PointDefenderInfo({ info }) {
     <div>
       <div className="has-text-weight-bold is-size-4">Defend your points!</div>
       <div>
-        <span className="is-italic">{randomDeciderName()}</span> has chosen{' '}
-        <span className="has-text-weight-bold">{highPerson.name}</span> to defend their{' '}
-        <span className="has-text-weight-bold">{info.max}</span> against{' '}
-        <span className="has-text-weight-bold">{lowPerson.name}</span> and their{' '}
-        <span className="has-text-weight-bold">{info.min}</span>
+        <div>
+          <span className="is-italic">{randomDeciderName()}</span> has chosen
+        </div>
+        <div>
+          <span className="has-text-weight-bold">{highPerson.name}</span> to defend their{' '}
+          <span className="has-text-weight-bold">{info.max}</span> against
+        </div>
+        <div>
+          <span className="has-text-weight-bold">{lowPerson.name}</span> and their{' '}
+          <span className="has-text-weight-bold">{info.min}</span>
+        </div>
       </div>
     </div>
   );

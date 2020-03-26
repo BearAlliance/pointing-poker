@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { hasEveryoneVoted } from './player-stats';
 import { PointDefenderInfo } from './point-defender-info';
 
@@ -72,36 +72,32 @@ export function GameStats({ players }) {
     };
   }
 
-  if (!hasEveryoneVoted(players)) {
-    return '';
-  }
-
   return (
-    <div>
-      <table className="table is-striped">
-        <thead>
-          <tr>
-            <th colSpan="2" className="has-text-centered">
-              Stats
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Average</td>
-            <td>{getAveragePoints()}</td>
-          </tr>
-          <tr>
-            <td>High</td>
-            <td>{getHighPeopleText()}</td>
-          </tr>
-          <tr>
-            <td>Low</td>
-            <td>{getLowPeopleText()}</td>
-          </tr>
-        </tbody>
-      </table>
-      <PointDefenderInfo info={defenderInfo()}></PointDefenderInfo>
-    </div>
+    <Fragment>
+      <article className="box">
+        <div className="message-header">
+          <p>Game Stats</p>
+        </div>
+        <div className="message-body">
+          <table className="table">
+            <tbody>
+              <tr>
+                <td>Average</td>
+                <td>{hasEveryoneVoted(players) ? getAveragePoints() : '--'}</td>
+              </tr>
+              <tr>
+                <td>High</td>
+                <td>{hasEveryoneVoted(players) ? getHighPeopleText() : '--'}</td>
+              </tr>
+              <tr>
+                <td>Low</td>
+                <td>{hasEveryoneVoted(players) ? getLowPeopleText() : '--'}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+      {hasEveryoneVoted(players) && <PointDefenderInfo info={defenderInfo()} />}
+    </Fragment>
   );
 }
