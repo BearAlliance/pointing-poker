@@ -18,18 +18,20 @@ export function PlayersTable({ players, me, showVotes }) {
         </tr>
       </thead>
       <tbody>
-        {players.map(player => (
-          <tr key={player.name}>
-            <td>
-              {player.points && <span className="has-text-success">|</span>}
-              {player.name === me ? <i className="fas fa-arrow-right" /> : null}
-              {player.name}
-            </td>
-            <td className="has-text-weight-bold">
-              {hasEveryoneVoted() || player.name === me || showVotes ? player.points : '--'}
-            </td>
-          </tr>
-        ))}
+        {players
+          .filter(player => !player.isGuest)
+          .map(player => (
+            <tr key={player.name}>
+              <td>
+                {player.points && <span className="has-text-success">|</span>}
+                {player.name === me ? <i className="fas fa-arrow-right" /> : null}
+                {player.name}
+              </td>
+              <td className="has-text-weight-bold">
+                {hasEveryoneVoted() || player.name === me || showVotes ? player.points : '--'}
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

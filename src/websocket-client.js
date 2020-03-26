@@ -1,7 +1,7 @@
 var W3CWebSocket = require('websocket').w3cwebsocket;
 
 export class WebSocketClient {
-  register = (gameId, playerId, cb) => {
+  register = (gameId, isGuest, playerId, cb) => {
     this.client = new W3CWebSocket(`ws://${document.location.hostname}:4000/socket/poker`);
     this.gameId = gameId;
     this.playerId = playerId;
@@ -11,7 +11,7 @@ export class WebSocketClient {
 
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
-        this.client.send(this.createMessage('JOIN'));
+        this.client.send(this.createMessage('JOIN', { isGuest }));
       } else {
         console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }
