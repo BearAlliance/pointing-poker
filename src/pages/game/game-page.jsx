@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { AddPlayer } from './add-player';
 import { GameTitle } from './game-title';
-import { PlayersTable } from './players-table';
 import { GameNotFound } from './game-not-found';
 import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
 import { WebSocketClient } from '../../websocket-client';
-import { GameStats } from './game-stats';
-import { ObserversTable } from './observers-table';
+import { Scorecard } from './scorecard';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -64,9 +62,9 @@ export default function GamePage({ match }) {
 
   return (
     <div>
+      <GameTitle gameId={gameId} />
       <div className="columns">
-        <div className="column">
-          <GameTitle gameId={gameId} />
+        <div className="column is-one-third">
           {playerId && (
             <Fragment>
               <StoryTitleSection
@@ -84,15 +82,6 @@ export default function GamePage({ match }) {
               </div>
               <hr />
               {!isGuest && <VotingButtons onSelected={points => vote(points)} />}
-              <div className="columns">
-                <div className="column">
-                  <PlayersTable me={playerId} players={game.players} showVotes={game.showVotes} />
-                  <ObserversTable players={game.players} me={playerId} />
-                </div>
-                <div className="column">
-                  <GameStats players={game.players} />
-                </div>
-              </div>
             </Fragment>
           )}
         </div>
@@ -105,6 +94,7 @@ export default function GamePage({ match }) {
               </div>
             </div>
           )}
+          {playerId && <Scorecard players={game.players} me={playerId} showVotes={game.showVotes} />}
         </div>
       </div>
     </div>
