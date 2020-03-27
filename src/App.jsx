@@ -34,7 +34,7 @@ function App() {
       <Nav />
       <div className="page-content">
         <Suspense fallback={<Loading />}>
-          <div className="container">
+          <div className="container is-fluid">
             <Switch>
               {routes.map((route, i) => (
                 <RouteWithSubRoutes key={i} {...route} />
