@@ -6,6 +6,7 @@ import { VotingButtons } from './voting-buttons';
 import { StoryTitleSection } from './story-title-section';
 import { WebSocketClient } from '../../websocket-client';
 import { Scorecard } from './scorecard';
+import { InviteLink } from './invite-link';
 
 export default function GamePage({ match }) {
   const [playerId, setPlayerId] = useState(null);
@@ -92,6 +93,11 @@ export default function GamePage({ match }) {
               <div className="hero-body">
                 <AddPlayer gameId={gameId} joinGame={joinGame} />
               </div>
+            </div>
+          )}
+          {playerId && game.players.length === 1 && (
+            <div className="notification is-info is-light">
+              You look lonely. Invite some friends with this link: <InviteLink gameId={gameId} showHref={true} />{' '}
             </div>
           )}
           {playerId && <Scorecard players={game.players} me={playerId} showVotes={game.showVotes} />}
