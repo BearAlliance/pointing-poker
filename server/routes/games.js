@@ -51,6 +51,8 @@ router.post('/game/create', (req, res) => {
     players: []
   };
 
+  console.log(`created game ${newGameId}`);
+
   res.json(games[newGameId]);
 });
 
