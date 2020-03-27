@@ -34,7 +34,7 @@ export function Nav() {
 
         <div className="navbar-end">
           <div className="navbar-item">
-            <div className="buttons">
+            <div className="buttons is-hidden-touch">
               <NewGameButton />
               <JoinGameButton />
             </div>

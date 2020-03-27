@@ -36,7 +36,7 @@ function _NewGameButton({ history }) {
   }
 
   return (
-    <button className={classNames('button', 'is-success', { 'is-loading': loading })} onClick={startSession}>
+    <button className={classNames('button', 'is-primary', { 'is-loading': loading })} onClick={startSession}>
       Start a session
     </button>
   );

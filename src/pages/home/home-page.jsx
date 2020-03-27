@@ -1,4 +1,6 @@
 import React from 'react';
+import { NewGameButton } from '../../nav/new-game-button';
+import { JoinGameButton } from '../../nav/join-game-button';
 
 function HomeLevel() {
   return (
@@ -36,6 +38,12 @@ export default function HomePage() {
         <div className="hero-body has-text-centered-mobile">
           <h1 className="title splash-text">Pointing Poker</h1>
           <h2 className="subtitle">Where everything&apos;s made up but the points still matter</h2>
+
+          <div className="is-hidden-desktop">
+            <NewGameButton />
+            <div className="has-text-weight-bold">or</div>
+            <JoinGameButton />
+          </div>
         </div>
       </section>
 
