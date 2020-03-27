@@ -5,7 +5,7 @@ import './footer.scss';
 export function Footer() {
   const socialLinks = [
     {
-      href: 'https://www.github.com',
+      href: 'https://github.com/BearAlliance/pointing-poker',
       icon: 'fa-github'
     }
   ];
