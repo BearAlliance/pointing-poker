@@ -15,6 +15,7 @@ export function getSocketRouter(expressWs) {
     ws.on('message', function(msg) {
       let message = JSON.parse(msg);
       let game = games[message.gameId];
+      let shouldBroadcast = true;
 
       switch (message.action) {
         case 'JOIN':
@@ -24,7 +25,7 @@ export function getSocketRouter(expressWs) {
             ws.gameId = game.id; // assign the gameId to this connection for filtering during broadcast
             ws.player = message.playerId;
           } else {
-            // TODO would be "nice" to prevent the broadcast, but no real harm
+            shouldBroadcast = false;
             ws.send(
               JSON.stringify({
                 error: 'Name already taken, try another'
@@ -52,20 +53,23 @@ export function getSocketRouter(expressWs) {
           game.showVotes = true;
           break;
         case 'KEEPALIVE':
+          shouldBroadcast = false;
           console.log(`Game ${game.id}: keeping alive ${message.playerId}`);
-          ws.send(JSON.stringify({ alive: true }));
+          ws.send(JSON.stringify({ game }));
           break;
         default:
           console.log('got message', message);
+          shouldBroadcast = false;
           ws.send(JSON.stringify(message));
       }
 
-      broadcastGameUpdate(game);
+      if (shouldBroadcast) {
+        broadcastGameUpdate(game);
+      }
     });
 
-    ws.on('close', (reasonCode, description) => {
-      console.log(`game ${ws.gameId}: player ${ws.player} disconnecting`);
-      console.log(reasonCode, description);
+    ws.on('close', reasonCode => {
+      console.log(`game ${ws.gameId}: player ${ws.player} disconnecting. Code ${reasonCode}`);
       const game = games[ws.gameId];
       games[ws.gameId].players = game.players.filter(player => player.name !== ws.player);
       broadcastGameUpdate(game);
