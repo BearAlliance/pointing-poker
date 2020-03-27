@@ -64,8 +64,8 @@ export default function GamePage({ match }) {
     <div>
       <GameTitle gameId={gameId} />
       <div className="columns">
-        <div className="column is-one-third">
-          {playerId && (
+        {playerId && (
+          <div className="column is-one-third">
             <Fragment>
               <StoryTitleSection
                 value={(game && game.title) || ''}
@@ -83,8 +83,8 @@ export default function GamePage({ match }) {
               <hr />
               {!isGuest && <VotingButtons onSelected={points => vote(points)} />}
             </Fragment>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="column">
           {!playerId && (
