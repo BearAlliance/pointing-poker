@@ -17,11 +17,16 @@ export class WebSocketClient {
 
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
+        setInterval(this.keepAlive, 25000);
         this.client.send(this.createMessage('JOIN', { isGuest }));
       } else {
         console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }
     };
+  };
+
+  keepAlive = () => {
+    this.client.send(this.createMessage('KEEPALIVE'));
   };
 
   vote = points => {

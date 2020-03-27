@@ -51,9 +51,13 @@ export function getSocketRouter(expressWs) {
           console.log(`Game ${game.id}: showing votes`);
           game.showVotes = true;
           break;
+        case 'KEEPALIVE':
+          console.log(`Game ${game.id}: keeping alive ${message.playerId}`);
+          ws.send(JSON.stringify({ alive: true }));
+          break;
         default:
           console.log('got message', message);
-          ws.send(message);
+          ws.send(JSON.stringify(message));
       }
 
       broadcastGameUpdate(game);
