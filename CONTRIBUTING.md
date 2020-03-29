@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping out! Please file issues for bugs and feature requests before beginning work. 
+Thanks for helping out! Please file issues for bugs and feature requests before beginning work.
 
 ## Commit guidelines
 
