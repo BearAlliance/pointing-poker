@@ -2,6 +2,7 @@ import React from 'react';
 import { NewGameButton } from '../../nav/new-game-button';
 import { JoinGameButton } from '../../nav/join-game-button';
 import { GamesInProgress } from './games-in-progress';
+import { CountUp } from './count-up';
 
 function HomeLevel() {
   return (
@@ -12,7 +13,7 @@ function HomeLevel() {
             <div>
               <p className="heading">Games in progress</p>
               <p className="title">
-                <GamesInProgress />
+                <GamesInProgress>{inProgressCount => <CountUp countTo={inProgressCount} />}</GamesInProgress>
               </p>
             </div>
           </div>

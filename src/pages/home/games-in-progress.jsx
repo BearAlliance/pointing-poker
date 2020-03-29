@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function GamesInProgress() {
+export function GamesInProgress({ children }) {
   const [inProgressCount, setInProgressCount] = useState(null);
 
   useEffect(() => {
@@ -15,5 +15,9 @@ export function GamesInProgress() {
     return null;
   }
 
-  return <span>{inProgressCount}</span>;
+  if (typeof children === 'function') {
+    return children(inProgressCount);
+  }
+
+  return inProgressCount;
 }
