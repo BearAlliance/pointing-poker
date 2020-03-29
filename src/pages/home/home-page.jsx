@@ -1,6 +1,7 @@
 import React from 'react';
 import { NewGameButton } from '../../nav/new-game-button';
 import { JoinGameButton } from '../../nav/join-game-button';
+import { GamesInProgress } from './games-in-progress';
 
 function HomeLevel() {
   return (
@@ -9,8 +10,10 @@ function HomeLevel() {
         <div className="level">
           <div className="level-item has-text-centered">
             <div>
-              <p className="heading">Price</p>
-              <p className="title">Free</p>
+              <p className="heading">Games in progress</p>
+              <p className="title">
+                <GamesInProgress />
+              </p>
             </div>
           </div>
           <div className="level-item has-text-centered">

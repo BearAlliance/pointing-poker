@@ -4,6 +4,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { getSocketRouter } from './routes/sockets';
+import { gameRouter } from './routes/game';
 import { gamesRouter } from './routes/games';
 
 const app = express();
@@ -36,7 +37,8 @@ function registerStatic() {
 }
 
 function registerRouters() {
-  app.use('/api/', gamesRouter);
+  app.use('/api/game/', gameRouter);
+  app.use('/api/games/', gamesRouter);
   app.use('/socket/', getSocketRouter(ws));
 }
 
