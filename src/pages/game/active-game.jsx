@@ -7,6 +7,7 @@ import { WebSocketClient } from '../../websocket-client';
 
 export function ActiveGame({ playerId, gameId, isGuest }) {
   const [game, setGame] = useState(null);
+  const [error, setError] = useState(null);
   const [socket] = useState(new WebSocketClient());
 
   function vote(points) {
@@ -14,11 +15,17 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
   }
 
   useEffect(() => {
-    socket.register(gameId, isGuest, playerId, data => {
-      console.log('Got a message from the server', data);
-      if (!data.error) {
-        setGame(data.game);
-      }
+    socket.register(gameId, isGuest, playerId, {
+      onMessage: data => {
+        if (data.error) {
+          setError(true);
+        } else {
+          setError(false);
+          setGame(data.game);
+        }
+      },
+      onClose: () => setError(true),
+      onError: () => setError(true)
     });
     return function cleanup() {
       socket.disconnect();
@@ -32,6 +39,12 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
   return (
     <Fragment>
       <div className="column is-one-third">
+        {error && (
+          <div className="notification is-danger">
+            <button className="delete" onClick={() => setError(false)} />
+            Socket connection lost. Please refresh the page
+          </div>
+        )}
         <Fragment>
           <StoryTitleSection value={(game && game.title) || ''} onChange={e => socket.updateTitle(e.target.value)} />
           <hr />
