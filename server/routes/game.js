@@ -41,6 +41,10 @@ function sendGameInfo(req, res) {
   res.json(req.game);
 }
 
+function isNameAvailable(req, res) {
+  res.json({ available: !req.game.players.map(player => player.name).includes(req.params.playerId) });
+}
+
 router.post('/create', (req, res) => {
   const newGameId = getNewGameId();
 
@@ -57,5 +61,7 @@ router.post('/create', (req, res) => {
 });
 
 router.get('/:gameId', getGame, sendGameInfo);
+
+router.get('/:gameId/:playerId/available', getGame, isNameAvailable);
 
 export const gameRouter = router;

@@ -70,7 +70,7 @@ export function getSocketRouter(expressWs) {
     ws.on('close', reasonCode => {
       console.log(`game ${ws.gameId}: player ${ws.player} disconnecting. Code ${reasonCode}`);
       const game = games[ws.gameId];
-      games[ws.gameId].players = game.players.filter(player => player.name !== ws.player);
+      games[ws.gameId].players = game.players.filter(player => player.name !== ws.player) || [];
       broadcastGameUpdate(game);
     });
   });

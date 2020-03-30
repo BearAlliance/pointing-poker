@@ -71,4 +71,8 @@ export class WebSocketClient {
       this.client = undefined;
     };
   };
+
+  disconnect = () => {
+    this.client.close();
+  };
 }
