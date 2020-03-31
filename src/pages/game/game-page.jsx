@@ -11,6 +11,7 @@ export default function GamePage({ match }) {
   const [gameId, setGameId] = useState(null);
   const [hasError, setHasError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [game, setGame] = useState(null);
 
   useEffect(() => {
     getGameData(match.params.gameId);
@@ -25,8 +26,9 @@ export default function GamePage({ match }) {
         }
         return Promise.reject(res);
       })
-      .then(() => {
+      .then(game => {
         setHasError(false);
+        setGame(game);
       })
       .catch(() => {
         setHasError(true);
@@ -54,6 +56,7 @@ export default function GamePage({ match }) {
               <div className="hero-body">
                 <AddPlayer
                   gameId={gameId}
+                  game={game}
                   onSubmit={(playerId, isGuest) => {
                     setPlayerId(playerId);
                     setIsGuest(isGuest);
