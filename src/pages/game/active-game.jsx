@@ -13,6 +13,8 @@ export function ActiveGame({ playerId, gameId }) {
   const [isGuest, setIsGuest] = useState(false);
   const [error, setError] = useState(null);
 
+  const votingType = 1; // FIXME: allow user to change, also use VOTING_TYPE from ./voting-choices.js
+
   function vote(points) {
     socket.vote(points);
   }
@@ -25,7 +27,7 @@ export function ActiveGame({ playerId, gameId }) {
           setError(true);
         } else {
           setError(false);
-          setGame(data.game);
+          setGame(Object.assign(data.game, { votingType }));
         }
       },
       onClose: () => setError(true),
@@ -62,7 +64,7 @@ export function ActiveGame({ playerId, gameId }) {
             </button>
           </div>
           <hr />
-          {!isGuest && <VotingButtons onSelected={points => vote(points)} />}
+          {!isGuest && <VotingButtons onSelected={points => vote(points)} votingType={votingType} />}
         </Fragment>
       </div>
       <div className="column">
@@ -71,7 +73,7 @@ export function ActiveGame({ playerId, gameId }) {
             You look lonely. Invite some friends with this link: <InviteLink gameId={gameId} showHref={true} />{' '}
           </div>
         )}
-        <Scorecard players={game.players} me={playerId} showVotes={game.showVotes} />
+        <Scorecard game={game} me={playerId} />
         <ObserverSwitch socket={socket} onChange={newValue => setIsGuest(newValue)} />
       </div>
     </Fragment>

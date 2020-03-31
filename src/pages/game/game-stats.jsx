@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import { hasEveryoneVoted } from './player-stats';
 import { PointDefenderInfo } from './point-defender-info';
+import { VOTING_TYPE, getDisplayValue } from './voting-choices';
 
-export function GameStats({ players }) {
+export function GameStats({ game }) {
+  const players = game.players;
   const playersThatPointed = getVotedWithPoints();
 
   function getVotedWithPoints() {
@@ -31,6 +33,10 @@ export function GameStats({ players }) {
       return player.points === max;
     });
 
+    if (game.votingType === VOTING_TYPE.TSHIRT) {
+      max = getDisplayValue(game.votingType, max);
+    }
+
     return {
       max,
       highPeople
@@ -45,6 +51,10 @@ export function GameStats({ players }) {
       return player.points === min;
     });
 
+    if (game.votingType === VOTING_TYPE.TSHIRT) {
+      min = getDisplayValue(game.votingType, min);
+    }
+
     return {
       min,
       lowPeople
@@ -53,6 +63,7 @@ export function GameStats({ players }) {
 
   function getHighPeopleText() {
     let { max, highPeople } = getHighPeople();
+
     if (highPeople.length > 0) {
       return `${max} by ${highPeople.map(p => p.name).join(', ')}`;
     } else {
@@ -62,6 +73,7 @@ export function GameStats({ players }) {
 
   function getLowPeopleText() {
     let { min, lowPeople } = getLowPeople();
+
     if (lowPeople.length > 0) {
       return `${min} by ${lowPeople.map(p => p.name).join(', ')}`;
     } else {
@@ -90,10 +102,12 @@ export function GameStats({ players }) {
         <div className="message-body">
           <table className="table">
             <tbody>
-              <tr>
-                <td>Average</td>
-                <td>{hasEveryoneVoted(players) ? getAveragePoints() : '--'}</td>
-              </tr>
+              {game.votingType !== VOTING_TYPE.TSHIRT && (
+                <tr>
+                  <td>Average</td>
+                  <td>{hasEveryoneVoted(players) ? getAveragePoints() : '--'}</td>
+                </tr>
+              )}
               <tr>
                 <td>High</td>
                 <td>{hasEveryoneVoted(players) ? getHighPeopleText() : '--'}</td>

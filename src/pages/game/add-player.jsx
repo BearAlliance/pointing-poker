@@ -32,6 +32,17 @@ export function AddPlayer({ gameId, onSubmit }) {
         {({ isSubmitting }) => (
           <Form>
             <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
+            {/* { game.players.length === 0 &&
+              <div className="control">
+                <label className="radio">
+                  <input type="radio" name="answer" defaultChecked="true" />Fibonacci
+                </label>
+                <label className="radio">
+                  <input type="radio" name="answer"/>T-shirt
+                </label>
+              </div>
+            } */}
+
             <ErrorMessage name="firstName">{msg => <div className="has-text-danger">{msg}</div>}</ErrorMessage>
           </Form>
         )}
