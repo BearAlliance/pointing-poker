@@ -3,30 +3,31 @@ import { hasEveryoneVoted } from './player-stats';
 import { PointDefenderInfo } from './point-defender-info';
 
 export function GameStats({ players }) {
-  // only count people that voted
+  const playersThatPointed = getVotedWithPoints();
+
+  function getVotedWithPoints() {
+    return players.filter(player => {
+      return player.points && player.points !== '?';
+    });
+  }
+
   function getAveragePoints() {
-    const total = players.reduce((accum, curr) => {
-      let points = curr.points ? curr.points : 0;
-      return accum + points;
+    const total = playersThatPointed.reduce((accum, curr) => {
+      return accum + curr.points;
     }, 0);
 
-    const playersThatVoted = players.reduce((accum, p) => {
-      if (p.points) return accum + 1;
-      return accum;
-    }, 0);
-
-    if (playersThatVoted === 0) {
+    if (getVotedWithPoints().length === 0) {
       return 'N/A';
     } else {
-      return `${Math.round(total / playersThatVoted)} Points`;
+      return `${Math.round(total / getVotedWithPoints().length)} Points`;
     }
   }
 
   function getHighPeople() {
-    let allPoints = players.map(p => p.points || -Infinity);
+    let allPoints = playersThatPointed.map(p => p.points);
     let max = Math.max(...allPoints);
 
-    let highPeople = players.filter(player => {
+    let highPeople = playersThatPointed.filter(player => {
       return player.points === max;
     });
 
@@ -36,16 +37,11 @@ export function GameStats({ players }) {
     };
   }
 
-  function getHighPeopleText() {
-    let { max, highPeople } = getHighPeople();
-    return `${max} by ${highPeople.map(p => p.name).join(', ')}`;
-  }
-
   function getLowPeople() {
-    let allPoints = players.map(p => p.points || +Infinity);
+    let allPoints = playersThatPointed.map(p => p.points);
     let min = Math.min(...allPoints);
 
-    let lowPeople = players.filter(player => {
+    let lowPeople = playersThatPointed.filter(player => {
       return player.points === min;
     });
 
@@ -55,9 +51,22 @@ export function GameStats({ players }) {
     };
   }
 
+  function getHighPeopleText() {
+    let { max, highPeople } = getHighPeople();
+    if (highPeople.length > 0) {
+      return `${max} by ${highPeople.map(p => p.name).join(', ')}`;
+    } else {
+      return 'N/A';
+    }
+  }
+
   function getLowPeopleText() {
     let { min, lowPeople } = getLowPeople();
-    return `${min} by ${lowPeople.map(p => p.name).join(', ')}`;
+    if (lowPeople.length > 0) {
+      return `${min} by ${lowPeople.map(p => p.name).join(', ')}`;
+    } else {
+      return 'N/A';
+    }
   }
 
   function defenderInfo() {

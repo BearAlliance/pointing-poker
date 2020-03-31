@@ -3,6 +3,10 @@ import React from 'react';
 export function VotingButtons({ onSelected }) {
   const choices = [
     {
+      value: '?',
+      label: '?'
+    },
+    {
       value: 1
     },
     {
