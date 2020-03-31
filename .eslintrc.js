@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'eslint-config-prettier'],
+  extends: ['react-app', 'eslint:recommended', 'plugin:react/recommended', 'eslint-config-prettier'],
   parser: 'babel-eslint',
   ignorePatterns: ['.gitignore'],
   env: {

@@ -3,6 +3,8 @@ var WebSocketConnection = require('websocket').connection;
 const router = express.Router();
 import { games } from '../state';
 
+const router = express.Router();
+
 function isNameAvailable(name, players = []) {
   return (
     players.find(p => {
@@ -71,7 +73,7 @@ export function getSocketRouter(expressWs) {
     ws.on('close', reasonCode => {
       console.log(`Game ${ws.gameId}: Player ${ws.player} disconnecting: ${reasonCode}:${getDescription(reasonCode)}`);
       const game = games[ws.gameId];
-      games[ws.gameId].players = game.players.filter(player => player.name !== ws.player);
+      games[ws.gameId].players = game.players.filter(player => player.name !== ws.player) || [];
       console.log('Players remaining', game.players);
       broadcastGameUpdate(game);
     });

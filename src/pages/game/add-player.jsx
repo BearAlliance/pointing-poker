@@ -4,14 +4,20 @@ import React from 'react';
 import { TextInputWithButton } from '../../inputs/text-with-button';
 import { Checkbox } from '../../inputs/checkbox';
 
-export function AddPlayer({ gameId, joinGame }) {
+export function AddPlayer({ gameId, onSubmit }) {
   function handleSubmit(values, { setSubmitting, setFieldError }) {
-    joinGame(values.firstName, values.isGuest, gameId, data => {
-      if (data.error) {
+    const playerId = values.firstName;
+
+    fetch(`/api/game/${gameId}/${playerId}/available`)
+      .then(res => res.json())
+      .then(res => {
+        if (res.available) {
+          onSubmit(playerId, values.isGuest);
+        } else {
+          setFieldError('firstName', 'Name already taken, try another');
+        }
         setSubmitting(false);
-        setFieldError('firstName', data.error);
-      }
-    });
+      });
   }
 
   return (
