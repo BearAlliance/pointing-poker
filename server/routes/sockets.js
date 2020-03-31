@@ -1,7 +1,6 @@
-const express = require('express');
-var WebSocketConnection = require('websocket').connection;
-const router = express.Router();
 import { games } from '../state';
+const express = require('express');
+const WebSocketConnection = require('websocket').connection;
 
 const router = express.Router();
 
