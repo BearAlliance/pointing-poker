@@ -9,7 +9,7 @@ export class WebSocketClient {
       this.client = new W3cwebsocket(`wss://${document.location.hostname}/socket/poker`);
     }
   }
-  register(gameId, isGuest, playerId, listeners) {
+  register(gameId, playerId, listeners) {
     this.gameId = gameId;
     this.playerId = playerId;
     this.onMessage = listeners.onMessage || noop;
@@ -21,11 +21,19 @@ export class WebSocketClient {
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
         this.keepAliveInterval = setInterval(() => this.keepAlive(), 25000);
-        this.client.send(this.createMessage('JOIN', { isGuest }));
+        this.client.send(this.createMessage('JOIN'));
       } else {
         console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }
     };
+  }
+
+  becomeObserver() {
+    this.client.send(this.createMessage('BECOME_OBSERVER'));
+  }
+
+  becomePlayer() {
+    this.client.send(this.createMessage('BECOME_PLAYER'));
   }
 
   keepAlive() {
