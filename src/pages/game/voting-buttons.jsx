@@ -25,13 +25,13 @@ export function VotingButtons({ onSelected }) {
       value: 13
     },
     {
-      value: 20
+      value: 21
     },
     {
-      value: 40
+      value: 34
     },
     {
-      value: 100
+      value: 55
     }
   ];
 
