@@ -35,6 +35,14 @@ export function getSocketRouter(expressWs) {
             );
           }
           break;
+        case 'BECOME_OBSERVER':
+          console.log(`Game ${game.id}: player ${message.playerId} becoming observer`);
+          game.players.find(player => player.name === message.playerId).isGuest = true;
+          break;
+        case 'BECOME_PLAYER':
+          console.log(`Game ${game.id}: player ${message.playerId} becoming player`);
+          game.players.find(player => player.name === message.playerId).isGuest = false;
+          break;
         case 'VOTE':
           console.log(`Game ${game.id}: player ${message.playerId} voting ${message.points}`);
           game.players.find(player => player.name === message.playerId).points = message.points;

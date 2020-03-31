@@ -4,11 +4,13 @@ import { Scorecard } from './scorecard';
 import { StoryTitleSection } from './story-title-section';
 import { VotingButtons } from './voting-buttons';
 import { WebSocketClient } from '../../websocket-client';
+import { ObserverSwitch } from './observer-switch';
 
 let socket;
 
-export function ActiveGame({ playerId, gameId, isGuest }) {
+export function ActiveGame({ playerId, gameId }) {
   const [game, setGame] = useState(null);
+  const [isGuest, setIsGuest] = useState(false);
   const [error, setError] = useState(null);
 
   function vote(points) {
@@ -17,7 +19,7 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
 
   useEffect(() => {
     socket = new WebSocketClient();
-    socket.register(gameId, isGuest, playerId, {
+    socket.register(gameId, playerId, {
       onMessage: data => {
         if (data.error) {
           setError(true);
@@ -33,7 +35,7 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
       socket.disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [playerId]);
 
   if (!game) {
     return null;
@@ -70,6 +72,7 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
           </div>
         )}
         <Scorecard players={game.players} me={playerId} showVotes={game.showVotes} />
+        <ObserverSwitch socket={socket} onChange={newValue => setIsGuest(newValue)} />
       </div>
     </Fragment>
   );
