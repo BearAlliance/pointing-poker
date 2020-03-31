@@ -23,7 +23,7 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
     return function cleanup() {
       socket.disconnect();
     };
-  }, [playerId, gameId]);
+  }, [playerId, gameId, isGuest, socket]);
 
   if (!game) {
     return null;

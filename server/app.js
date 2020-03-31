@@ -20,7 +20,7 @@ function registerMiddleware() {
 function registerStatic() {
   // Only when using SSL
   app.get('*', function(req, res, next) {
-    if (req.headers['x-forwarded-proto'] != 'https' && process.env.NODE_ENV === 'production') {
+    if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
       res.redirect(301, `https://${req.hostname}${req.url}`);
     } else {
       /* Continue to other routes if we're not redirecting */
