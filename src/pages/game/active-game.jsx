@@ -36,7 +36,7 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
           <StoryTitleSection value={(game && game.title) || ''} onChange={e => socket.updateTitle(e.target.value)} />
           <hr />
           <div className="buttons">
-            <button className="button is-danger" onClick={socket.reset}>
+            <button className="button is-warning" onClick={socket.reset}>
               Clear Votes
             </button>
             <button className="button is-info" onClick={socket.showVotes}>
