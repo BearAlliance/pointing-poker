@@ -15,6 +15,7 @@ export function Nav() {
           <img src={logo} width="112" height="28" alt="brand-logo" />
         </Link>
 
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a
           role="button"
           className={classNames('navbar-burger', 'burger', {

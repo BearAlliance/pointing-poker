@@ -1,6 +1,7 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
 import { games } from '../state';
+
+const router = express.Router();
 
 function isNameAvailable(name, players = []) {
   return (
