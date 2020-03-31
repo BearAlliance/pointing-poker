@@ -5,16 +5,18 @@ import { StoryTitleSection } from './story-title-section';
 import { VotingButtons } from './voting-buttons';
 import { WebSocketClient } from '../../websocket-client';
 
+let socket;
+
 export function ActiveGame({ playerId, gameId, isGuest }) {
   const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
-  const [socket] = useState(new WebSocketClient());
 
   function vote(points) {
     socket.vote(points);
   }
 
   useEffect(() => {
+    socket = new WebSocketClient();
     socket.register(gameId, isGuest, playerId, {
       onMessage: data => {
         if (data.error) {
@@ -30,7 +32,8 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
     return function cleanup() {
       socket.disconnect();
     };
-  }, [playerId, gameId, isGuest, socket]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!game) {
     return null;
@@ -49,10 +52,10 @@ export function ActiveGame({ playerId, gameId, isGuest }) {
           <StoryTitleSection value={(game && game.title) || ''} onChange={e => socket.updateTitle(e.target.value)} />
           <hr />
           <div className="buttons">
-            <button className="button is-warning" onClick={socket.reset}>
+            <button className="button is-warning" onClick={() => socket.resetVotes()}>
               Clear Votes
             </button>
-            <button className="button is-info" onClick={socket.showVotes}>
+            <button className="button is-info" onClick={() => socket.showVotes()}>
               Show Votes
             </button>
           </div>

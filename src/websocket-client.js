@@ -1,13 +1,15 @@
 import { isDevelopment } from './env';
-import { w3cwebsocket, noop } from 'websocket';
+import { w3cwebsocket as W3cwebsocket, noop } from 'websocket';
 
 export class WebSocketClient {
-  register(gameId, isGuest, playerId, listeners) {
+  constructor() {
     if (isDevelopment()) {
-      this.client = new w3cwebsocket(`ws://${document.location.hostname}:4000/socket/poker`);
+      this.client = new W3cwebsocket(`ws://${document.location.hostname}:4000/socket/poker`);
     } else {
-      this.client = new w3cwebsocket(`wss://${document.location.hostname}/socket/poker`);
+      this.client = new W3cwebsocket(`wss://${document.location.hostname}/socket/poker`);
     }
+  }
+  register(gameId, isGuest, playerId, listeners) {
     this.gameId = gameId;
     this.playerId = playerId;
     this.onMessage = listeners.onMessage || noop;
@@ -42,7 +44,7 @@ export class WebSocketClient {
     this.client.send(this.createMessage('SHOW_VOTES'));
   }
 
-  reset() {
+  resetVotes() {
     this.client.send(this.createMessage('RESET'));
   }
 

@@ -15,8 +15,8 @@ export function AddPlayer({ gameId, onSubmit }) {
           onSubmit(playerId, values.isGuest);
         } else {
           setFieldError('firstName', 'Name already taken, try another');
+          setSubmitting(false);
         }
-        setSubmitting(false);
       });
   }
 
