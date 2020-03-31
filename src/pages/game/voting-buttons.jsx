@@ -32,6 +32,10 @@ export function VotingButtons({ onSelected }) {
     },
     {
       value: 55
+    },
+    {
+      label: '∞',
+      value: '∞'
     }
   ];
 
