@@ -1,5 +1,6 @@
-import express from 'express';
 import { games } from '../state';
+const express = require('express');
+const WebSocketConnection = require('websocket').connection;
 
 const router = express.Router();
 
@@ -69,12 +70,17 @@ export function getSocketRouter(expressWs) {
     });
 
     ws.on('close', reasonCode => {
-      console.log(`game ${ws.gameId}: player ${ws.player} disconnecting. Code ${reasonCode}`);
+      console.log(`Game ${ws.gameId}: Player ${ws.player} disconnecting: ${reasonCode}:${getDescription(reasonCode)}`);
       const game = games[ws.gameId];
       games[ws.gameId].players = game.players.filter(player => player.name !== ws.player) || [];
+      console.log('Players remaining', game.players);
       broadcastGameUpdate(game);
     });
   });
+
+  function getDescription(code) {
+    return WebSocketConnection.CLOSE_DESCRIPTIONS[code];
+  }
 
   function broadcastGameUpdate(game) {
     expressWs.getWss('/socket/poker').clients.forEach(client => {
