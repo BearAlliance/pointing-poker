@@ -20,7 +20,7 @@ export function AddPlayer({ gameId, onSubmit }) {
   }
 
   return (
-    <div>
+    <div data-testid="add-player">
       <Formik
         initialValues={{ firstName: '' }}
         validationSchema={Yup.object({
@@ -31,7 +31,13 @@ export function AddPlayer({ gameId, onSubmit }) {
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
+            <TextInputWithButton
+              testid="name-input"
+              name="firstName"
+              label="Name"
+              buttonLabel="Join"
+              loading={isSubmitting}
+            />
             <ErrorMessage name="firstName">{msg => <div className="has-text-danger">{msg}</div>}</ErrorMessage>
           </Form>
         )}

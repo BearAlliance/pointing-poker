@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useField } from 'formik';
 import classNames from 'classnames';
 
-export function TextInputWithButton({ name, label, buttonLabel, onButtonClick, loading, placeholder }) {
+export function TextInputWithButton({ testid, name, label, buttonLabel, onButtonClick, loading, placeholder }) {
   const [field] = useField(name);
 
   return (
@@ -15,6 +15,7 @@ export function TextInputWithButton({ name, label, buttonLabel, onButtonClick, l
       <div className="field has-addons">
         <div className="control">
           <input
+            data-testid={testid}
             placeholder={placeholder}
             name={name}
             className="input"

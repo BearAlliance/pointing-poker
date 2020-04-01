@@ -4,7 +4,7 @@ import { InviteLink } from './invite-link';
 export function GameTitle({ gameId }) {
   return (
     <Fragment>
-      <div className="hero is-hidden-touch">
+      <div className="hero is-hidden-touch" data-testid="game-title">
         <div className="hero-body">
           <h1 className="is-size-3">
             Planning Poker <InviteLink gameId={gameId} />{' '}

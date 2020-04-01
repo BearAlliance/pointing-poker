@@ -23,6 +23,7 @@
     "build:server": "babel server --out-dir build-server",
     "build:client": "react-scripts build",
     "test": "npm run prettier:check && npm run lint && react-scripts test",
+    "unit": "react-scripts test --watchAll",
     "lint": "eslint --ext .js --ext .jsx src server",
     "eject": "react-scripts eject",
     "prettier": "prettier --ignore-path .gitignore \"**/*.{js,jsx,md}\"",
