@@ -41,6 +41,14 @@ export function ActiveGame({ playerId, gameId }) {
     return null;
   }
 
+  function toggleVotes() {
+    if (game.showVotes) {
+      socket.hideVotes();
+    } else {
+      socket.showVotes();
+    }
+  }
+
   return (
     <Fragment>
       <div className="column is-one-third">
@@ -57,8 +65,8 @@ export function ActiveGame({ playerId, gameId }) {
             <button className="button is-warning" onClick={() => socket.resetVotes()}>
               Clear Votes
             </button>
-            <button className="button is-info" onClick={() => socket.showVotes()}>
-              Show Votes
+            <button className="button is-info" onClick={toggleVotes}>
+              {game.showVotes ? 'Hide Votes' : 'Show Votes'}
             </button>
           </div>
           <hr />
