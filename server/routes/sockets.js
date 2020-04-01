@@ -62,6 +62,10 @@ export function getSocketRouter(expressWs) {
           console.log(`Game ${game.id}: showing votes`);
           game.showVotes = true;
           break;
+        case 'HIDE_VOTES':
+          console.log(`Game ${game.id}: hiding votes`);
+          game.showVotes = false;
+          break;
         case 'KEEPALIVE':
           shouldBroadcast = false;
           console.log(`Game ${game.id}: keeping alive ${message.playerId}`);

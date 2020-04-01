@@ -52,6 +52,10 @@ export class WebSocketClient {
     this.client.send(this.createMessage('SHOW_VOTES'));
   }
 
+  hideVotes() {
+    this.client.send(this.createMessage('HIDE_VOTES'));
+  }
+
   resetVotes() {
     this.client.send(this.createMessage('RESET'));
   }
