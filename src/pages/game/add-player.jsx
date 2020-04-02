@@ -20,7 +20,7 @@ export function AddPlayer({ gameId, onSubmit }) {
   }
 
   return (
-    <div>
+    <div data-testid="add-player">
       <Formik
         initialValues={{ firstName: '' }}
         validationSchema={Yup.object({

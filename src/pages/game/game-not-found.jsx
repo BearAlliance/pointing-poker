@@ -3,7 +3,7 @@ import { NewGameButton } from '../../nav/new-game-button';
 
 export function GameNotFound() {
   return (
-    <div className="hero">
+    <div className="hero" data-testid="game-not-found">
       <div className="hero-body">
         <h1 className="title">Game not found</h1>
         <h2 className="subtitle">

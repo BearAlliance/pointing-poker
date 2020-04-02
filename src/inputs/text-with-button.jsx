@@ -15,6 +15,7 @@ export function TextInputWithButton({ name, label, buttonLabel, onButtonClick, l
       <div className="field has-addons">
         <div className="control">
           <input
+            data-testid={`text-input-${name}`}
             placeholder={placeholder}
             name={name}
             className="input"

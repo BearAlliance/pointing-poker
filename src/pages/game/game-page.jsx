@@ -45,7 +45,7 @@ export default function GamePage({ match }) {
   }
 
   return (
-    <div>
+    <div data-testid="game-page">
       <GameTitle gameId={gameId} />
       <div className="columns">
         {!playerId && (
