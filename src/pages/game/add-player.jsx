@@ -32,7 +32,13 @@ export function AddPlayer({ gameId, onSubmit }) {
         {({ isSubmitting }) => (
           <Form>
             <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
-            <ErrorMessage name="firstName">{msg => <div className="has-text-danger">{msg}</div>}</ErrorMessage>
+            <ErrorMessage name="firstName">
+              {msg => (
+                <div data-testid="join-error" className="has-text-danger">
+                  {msg}
+                </div>
+              )}
+            </ErrorMessage>
           </Form>
         )}
       </Formik>
