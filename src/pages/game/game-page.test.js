@@ -6,14 +6,8 @@ import '@testing-library/jest-dom';
 import GamePage from './game-page';
 
 describe('Game Page', () => {
-  const match = {
-    params: {
-      gameId: 1234
-    }
-  };
-
   test('shows game not found', async () => {
-    global.fetch = jest.fn(() => Promise.resolve());
+    jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve());
 
     await doRender();
 
@@ -31,12 +25,19 @@ describe('Game Page', () => {
     await doRender();
 
     expect(screen.queryByTestId('add-player')).toBeInTheDocument();
+  });
 
-    // remove the mock to ensure tests are completely isolated
+  afterEach(() => {
     global.fetch.mockRestore();
   });
 
   async function doRender() {
+    const match = {
+      params: {
+        gameId: 1234
+      }
+    };
+
     await act(async () => {
       render(
         <MemoryRouter>

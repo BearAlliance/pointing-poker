@@ -31,13 +31,7 @@ export function AddPlayer({ gameId, onSubmit }) {
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <TextInputWithButton
-              testid="name-input"
-              name="firstName"
-              label="Name"
-              buttonLabel="Join"
-              loading={isSubmitting}
-            />
+            <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
             <ErrorMessage name="firstName">{msg => <div className="has-text-danger">{msg}</div>}</ErrorMessage>
           </Form>
         )}
