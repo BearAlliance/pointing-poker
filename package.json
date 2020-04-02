@@ -28,7 +28,8 @@
     "eject": "react-scripts eject",
     "prettier": "prettier --ignore-path .gitignore \"**/*.{js,jsx,md}\"",
     "prettier:check": "npm run prettier -- --check",
-    "prettier:fix": "npm run prettier -- --write"
+    "prettier:fix": "npm run prettier -- --write",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -62,6 +63,7 @@
     "bulma": "^0.8.0",
     "classnames": "^2.2.6",
     "concurrently": "^5.1.0",
+    "cypress": "^4.3.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-react": "^7.19.0",

@@ -14,7 +14,8 @@ module.exports = {
     expect: 'readonly',
     require: 'readonly',
     __dirname: 'readonly',
-    module: 'readonly'
+    module: 'readonly',
+    cy: 'readonly'
   },
   parserOptions: {
     ecmaFeatures: {
