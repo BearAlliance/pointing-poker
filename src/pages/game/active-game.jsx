@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { InviteLink } from './invite-link';
+import { InviteLink } from '../../components/invite-link';
 import { Scorecard } from './scorecard';
 import { StoryTitleSection } from './story-title-section';
 import { VotingButtons } from './voting-buttons';
-import { WebSocketClient } from '../../websocket-client';
+import { PokerSocket } from '../../websocket-client';
 import { ObserverSwitch } from './observer-switch';
 
 let socket;
@@ -18,8 +18,7 @@ export function ActiveGame({ playerId, gameId }) {
   }
 
   useEffect(() => {
-    socket = new WebSocketClient();
-    socket.register(gameId, playerId, {
+    socket = new PokerSocket(gameId, playerId, 'poker', {
       onMessage: data => {
         if (data.error) {
           setError(true);
@@ -31,6 +30,7 @@ export function ActiveGame({ playerId, gameId }) {
       onClose: () => setError(true),
       onError: () => setError(true)
     });
+    socket.connect();
     return function cleanup() {
       socket.disconnect();
     };
@@ -76,7 +76,7 @@ export function ActiveGame({ playerId, gameId }) {
       <div className="column">
         {game.players.length === 1 && (
           <div className="notification is-info is-light">
-            You look lonely. Invite some friends with this link: <InviteLink gameId={gameId} showHref={true} />{' '}
+            You look lonely. Invite some friends with this link: <InviteLink id={gameId} type="game" showHref={true} />{' '}
           </div>
         )}
         <Scorecard players={game.players} me={playerId} showVotes={game.showVotes} />

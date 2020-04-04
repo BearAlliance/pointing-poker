@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AddPlayer } from './add-player';
+import { AddPlayer } from '../../components/add-player';
 import { GameTitle } from './game-title';
 import { GameNotFound } from './game-not-found';
 import { ActiveGame } from './active-game';
@@ -53,7 +53,8 @@ export default function GamePage({ match }) {
             <div className="hero">
               <div className="hero-body">
                 <AddPlayer
-                  gameId={gameId}
+                  type="game"
+                  id={gameId}
                   onSubmit={(playerId, isGuest) => {
                     setPlayerId(playerId);
                     setIsGuest(isGuest);

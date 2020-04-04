@@ -45,7 +45,7 @@ describe('Add Player', () => {
 
   async function doRender() {
     await act(async () => {
-      render(<AddPlayer />);
+      render(<AddPlayer type="game" />);
     });
   }
 });

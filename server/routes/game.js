@@ -1,28 +1,8 @@
 import express from 'express';
 import { games } from '../state';
+import { getNewGameId } from '../helpers/game-id';
 
 const router = express.Router();
-
-function padZeros(int, desiredLength) {
-  if (int.toString().length < desiredLength) {
-    return padZeros(`0${int.toString()}`, desiredLength);
-  }
-  return int;
-}
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
-function getNewGameId() {
-  let newGameId = padZeros(getRandomInt(9999), 4);
-
-  while (games[newGameId]) {
-    newGameId = padZeros(getRandomInt(9999), 4);
-  }
-
-  return newGameId;
-}
 
 function getGame(req, res, next) {
   const { gameId } = req.params;
@@ -46,7 +26,7 @@ function isNameAvailable(req, res) {
 }
 
 router.post('/create', (req, res) => {
-  const newGameId = getNewGameId();
+  const newGameId = getNewGameId(games);
 
   games[newGameId] = {
     id: newGameId,

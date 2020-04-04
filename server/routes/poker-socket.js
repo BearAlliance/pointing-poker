@@ -1,7 +1,8 @@
+import express from 'express';
+import websocket from 'websocket';
 import { games } from '../state';
-const express = require('express');
-const WebSocketConnection = require('websocket').connection;
 
+const WebSocketConnection = websocket.connection;
 const router = express.Router();
 
 function isNameAvailable(name, players = []) {
@@ -12,11 +13,11 @@ function isNameAvailable(name, players = []) {
   );
 }
 
-export function getSocketRouter(expressWs) {
-  router.ws('/poker', function(ws) {
+export function getPokerSocketRouter(expressWs) {
+  router.ws('/', function(ws) {
     ws.on('message', function(msg) {
       let message = JSON.parse(msg);
-      let game = games[message.gameId];
+      let game = games[message.sessionId];
       let shouldBroadcast = true;
 
       switch (message.action) {

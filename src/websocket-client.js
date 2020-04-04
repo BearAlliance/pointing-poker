@@ -2,25 +2,26 @@ import { isDevelopment } from './env';
 import { w3cwebsocket as W3cwebsocket, noop } from 'websocket';
 
 export class WebSocketClient {
-  constructor() {
+  constructor(sessionId, playerId, type, listeners) {
     if (isDevelopment()) {
-      this.client = new W3cwebsocket(`ws://${document.location.hostname}:4000/socket/poker`);
+      this.client = new W3cwebsocket(`ws://${document.location.hostname}:4000/socket/${type}`);
     } else {
-      this.client = new W3cwebsocket(`wss://${document.location.hostname}/socket/poker`);
+      this.client = new W3cwebsocket(`wss://${document.location.hostname}/socket/${type}`);
     }
-  }
-  register(gameId, playerId, listeners) {
-    this.gameId = gameId;
+    this.keepAliveInterval = setInterval(() => this.keepAlive(), 25000);
+
+    this.id = sessionId;
     this.playerId = playerId;
     this.onMessage = listeners.onMessage || noop;
     this.onError = listeners.onError || noop;
     this.onClose = listeners.onClose || noop;
 
-    this.connectSocket();
+    this.registerListeners();
+  }
 
+  connect() {
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
-        this.keepAliveInterval = setInterval(() => this.keepAlive(), 25000);
         this.client.send(this.createMessage('JOIN'));
       } else {
         console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
@@ -28,42 +29,14 @@ export class WebSocketClient {
     };
   }
 
-  becomeObserver() {
-    this.client.send(this.createMessage('BECOME_OBSERVER'));
-  }
-
-  becomePlayer() {
-    this.client.send(this.createMessage('BECOME_PLAYER'));
-  }
-
   keepAlive() {
     this.client.send(this.createMessage('KEEPALIVE'));
-  }
-
-  vote(points) {
-    this.client.send(this.createMessage('VOTE', { points }));
-  }
-
-  updateTitle(title) {
-    this.client.send(this.createMessage('CHANGE_TITLE', { title }));
-  }
-
-  showVotes() {
-    this.client.send(this.createMessage('SHOW_VOTES'));
-  }
-
-  hideVotes() {
-    this.client.send(this.createMessage('HIDE_VOTES'));
-  }
-
-  resetVotes() {
-    this.client.send(this.createMessage('RESET'));
   }
 
   createMessage(action, overrides) {
     let message = {
       action,
-      gameId: this.gameId,
+      sessionId: this.id,
       playerId: this.playerId,
       ...overrides
     };
@@ -71,7 +44,7 @@ export class WebSocketClient {
     return JSON.stringify(message);
   }
 
-  connectSocket() {
+  registerListeners() {
     this.client.onerror = e => {
       console.error('ERROR: WebSocket Client', e);
       this.onError(e);
@@ -93,5 +66,41 @@ export class WebSocketClient {
 
   disconnect() {
     this.client.close();
+  }
+}
+
+export class RetroSocket extends WebSocketClient {
+  addItem(text, column) {
+    this.client.send(this.createMessage('ADD_ITEM', { column, text }));
+  }
+}
+
+export class PokerSocket extends WebSocketClient {
+  vote(points) {
+    this.client.send(this.createMessage('VOTE', { points }));
+  }
+
+  updateTitle(title) {
+    this.client.send(this.createMessage('CHANGE_TITLE', { title }));
+  }
+
+  showVotes() {
+    this.client.send(this.createMessage('SHOW_VOTES'));
+  }
+
+  hideVotes() {
+    this.client.send(this.createMessage('HIDE_VOTES'));
+  }
+
+  resetVotes() {
+    this.client.send(this.createMessage('RESET'));
+  }
+
+  becomeObserver() {
+    this.client.send(this.createMessage('BECOME_OBSERVER'));
+  }
+
+  becomePlayer() {
+    this.client.send(this.createMessage('BECOME_PLAYER'));
   }
 }

@@ -1,13 +1,19 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
-import { TextInputWithButton } from '../../inputs/text-with-button';
+import { TextInputWithButton } from '../inputs/text-with-button';
 
-export function AddPlayer({ gameId, onSubmit }) {
+export function AddPlayer({ id, onSubmit, type }) {
   function handleSubmit(values, { setSubmitting, setFieldError }) {
     const playerId = values.firstName;
 
-    fetch(`/api/game/${gameId}/${playerId}/available`)
+    fetch(`/api/${type}/${id}/${playerId}/available`)
+      .then(res => {
+        if (!res.ok) {
+          return Promise.reject(res);
+        }
+        return res;
+      })
       .then(res => res.json())
       .then(res => {
         if (res.available) {
@@ -16,6 +22,10 @@ export function AddPlayer({ gameId, onSubmit }) {
           setFieldError('firstName', 'Name already taken, try another');
           setSubmitting(false);
         }
+      })
+      .catch(err => {
+        setFieldError('firstName', 'Error joining, try again');
+        setSubmitting(false);
       });
   }
 

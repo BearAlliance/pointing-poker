@@ -3,9 +3,11 @@ import expressWs from 'express-ws';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import { getSocketRouter } from './routes/sockets';
+import { getPokerSocketRouter } from './routes/poker-socket';
 import { gameRouter } from './routes/game';
 import { gamesRouter } from './routes/games';
+import { retroRouter } from './routes/retro';
+import { getRetroSocketRouter } from './routes/retro-socket';
 
 const app = express();
 const ws = expressWs(app);
@@ -37,9 +39,11 @@ function registerStatic() {
 }
 
 function registerRouters() {
+  app.use('/api/retro/', retroRouter);
   app.use('/api/game/', gameRouter);
   app.use('/api/games/', gamesRouter);
-  app.use('/socket/', getSocketRouter(ws));
+  app.use('/socket/poker', getPokerSocketRouter(ws));
+  app.use('/socket/retro', getRetroSocketRouter(ws));
 }
 
 registerMiddleware();

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import logo from './logo.svg';
 import { Link } from 'react-router-dom';
-import { NewGameButton } from './new-game-button';
-import { JoinGameButton } from './join-game-button';
 
 export function Nav() {
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
@@ -31,16 +29,16 @@ export function Nav() {
       </div>
 
       <div className={classNames('navbar-menu', { 'is-active': showBurgerMenu })}>
-        <div className="navbar-start"></div>
-
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons is-hidden-touch">
-              <NewGameButton />
-              <JoinGameButton />
-            </div>
-          </div>
+        <div className="navbar-start">
+          <Link className="navbar-item" to="/game">
+            Poker
+          </Link>
+          <Link className="navbar-item" to="/retro">
+            Retro
+          </Link>
         </div>
+
+        <div className="navbar-end" />
       </div>
     </nav>
   );

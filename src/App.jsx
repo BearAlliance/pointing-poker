@@ -24,6 +24,18 @@ function App() {
       component: lazy(() => import('./pages/game/game-page'))
     },
     {
+      path: '/game/',
+      component: lazy(() => import('./pages/game/game-splash-page'))
+    },
+    {
+      path: '/retro/:retroId',
+      component: lazy(() => import('./pages/retro/retro-page'))
+    },
+    {
+      path: '/retro',
+      component: lazy(() => import('./pages/retro/retro-splash-page'))
+    },
+    {
       path: '/',
       component: lazy(() => import('./pages/home/home-page'))
     }
