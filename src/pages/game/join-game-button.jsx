@@ -1,7 +1,7 @@
 import React from 'react';
 import { ErrorMessage, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { TextInputWithButton } from '../inputs/text-with-button';
+import { TextInputWithButton } from '../../inputs/text-with-button';
 import { withRouter } from 'react-router-dom';
 
 export function _JoinGameButton({ history }) {

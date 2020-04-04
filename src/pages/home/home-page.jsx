@@ -1,6 +1,6 @@
 import React from 'react';
-import { NewGameButton } from '../../nav/new-game-button';
-import { JoinGameButton } from '../../nav/join-game-button';
+import { NewGameButton } from '../game/new-game-button';
+import { JoinGameButton } from '../game/join-game-button';
 import { GamesInProgress } from './games-in-progress';
 import { CountUp } from './count-up';
 

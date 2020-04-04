@@ -1,18 +1,18 @@
 import React, { Fragment } from 'react';
 import { InviteLink } from '../../components/invite-link';
 
-export function GameTitle({ gameId }) {
+export function RetroTitle({ retroId }) {
   return (
     <Fragment>
       <div className="hero is-hidden-touch" data-testid="game-title">
         <div className="hero-body">
           <h1 className="is-size-3">
-            Planning Poker <InviteLink id={gameId} type="game" />{' '}
+            Retrospective <InviteLink id={retroId} type="retro" />
           </h1>
         </div>
       </div>
       <div className="is-hidden-desktop is-size-4">
-        Planning Poker <InviteLink gameId={gameId} type="game" />
+        Retrospective <InviteLink id={retroId} type="retro" />
       </div>
     </Fragment>
   );
