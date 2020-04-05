@@ -52,7 +52,8 @@ export function ActiveRetro({ playerName, retroId }) {
               myPlayerId={playerName}
               addItem={text => socket.addItem(text, COLUMN_TYPES.STOP_DOING)}
               removeItem={id => socket.removeItem(id)}
-              voteForItem={id => socket.voteForItem(id)}
+              onLikeItem={id => socket.likeItem(id)}
+              onUnlikeItem={id => socket.unlikeItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.STOP_DOING}`, [])}
             />{' '}
           </div>
@@ -62,7 +63,8 @@ export function ActiveRetro({ playerName, retroId }) {
               myPlayerId={playerName}
               addItem={text => socket.addItem(text, COLUMN_TYPES.START_DOING)}
               removeItem={id => socket.removeItem(id)}
-              voteForItem={id => socket.voteForItem(id)}
+              onLikeItem={id => socket.likeItem(id)}
+              onUnlikeItem={id => socket.unlikeItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.START_DOING}`, [])}
             />{' '}
           </div>
