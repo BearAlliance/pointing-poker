@@ -7,14 +7,18 @@ export function RetroItem({ item, onRemove, onLike, onUnlike, hasVoted }) {
 
   return (
     <div key={item.id} className="notification is-info-light">
-      {item.text}
-      <div className="is-pulled-right has-text-grey">
+      <div>{item.text}</div>
+      <div className="has-text-right has-text-grey">
         {item.votes.length}
         <span className="icon">
           <i
             title={hasVoted ? 'Unlike this item' : 'Like this item'}
             style={{ cursor: 'pointer' }}
-            className={classNames('fa-thumbs-up', { 'has-text-grey-dark': isVoteHover, fas: hasVoted, far: !hasVoted })}
+            className={classNames('fa-thumbs-up', {
+              'has-text-grey-dark': isVoteHover,
+              fas: hasVoted,
+              far: !hasVoted
+            })}
             onMouseEnter={() => setIsVoteHover(true)}
             onMouseLeave={() => setIsVoteHover(false)}
             onClick={() => (hasVoted ? onUnlike() : onLike())}
