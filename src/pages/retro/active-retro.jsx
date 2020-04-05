@@ -33,6 +33,7 @@ export function ActiveRetro({ playerName, retroId }) {
             <InviteLink id={retroId} type="retro" showHref={true} />{' '}
           </div>
         )}
+        {retro.players.length > 1 && <div>Participants: {retro.players.map(player => player.name).join(', ')}</div>}
         <div className="columns">
           <div className="column">
             <RetroColumn
