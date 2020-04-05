@@ -73,6 +73,10 @@ export class RetroSocket extends WebSocketClient {
   addItem(text, column) {
     this.client.send(this.createMessage('ADD_ITEM', { column, text }));
   }
+
+  removeItem(itemId) {
+    this.client.send(this.createMessage('REMOVE_ITEM', { itemId }));
+  }
 }
 
 export class PokerSocket extends WebSocketClient {
