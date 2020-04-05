@@ -10,9 +10,9 @@ export function RetroColumn({ type, items, addItem, removeItem, onLikeItem, onUn
   const [addMode, setAddMode] = useState(false);
 
   const headers = {
-    [COLUMN_TYPES.KEEP_DOING]: 'Keep doing',
-    [COLUMN_TYPES.STOP_DOING]: 'Stop doing',
-    [COLUMN_TYPES.START_DOING]: 'Start doing'
+    [COLUMN_TYPES.KEEP_DOING]: 'Keep Doing',
+    [COLUMN_TYPES.STOP_DOING]: 'Stop Doing',
+    [COLUMN_TYPES.START_DOING]: 'Start Doing'
   };
 
   const headerText = headers[type];
@@ -30,9 +30,9 @@ export function RetroColumn({ type, items, addItem, removeItem, onLikeItem, onUn
           'is-warning': type === COLUMN_TYPES.STOP_DOING,
           'is-success': type === COLUMN_TYPES.START_DOING
         })}>
-        <div className="columns">
-          <div className="title column">{headerText}</div>
-          <div className="column is-one-fifth">
+        <div className="columns is-mobile is-vcentered">
+          <div className="is-size-4 is-size-5-touch column">{headerText}</div>
+          <div className="column is-1">
             <AddButton onClick={() => setAddMode(true)} />
           </div>
         </div>

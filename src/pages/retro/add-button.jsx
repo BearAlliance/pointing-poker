@@ -8,7 +8,7 @@ export function AddButton({ onClick }) {
     <span
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="has-text-grey"
+      className="has-text-grey icon"
       onClick={onClick}>
       <i
         style={{ cursor: 'pointer' }}
