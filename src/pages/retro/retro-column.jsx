@@ -2,10 +2,11 @@ import React, { Fragment, useState } from 'react';
 import classNames from 'classnames';
 import { AddButton } from './add-button';
 import { RetroInput } from './retro-input';
+import { RetroItem } from './retro-item';
 
 export const COLUMN_TYPES = { KEEP_DOING: 'keepDoing', STOP_DOING: 'stopDoing', START_DOING: 'startDoing' };
 
-export function RetroColumn({ type, items, addItem }) {
+export function RetroColumn({ type, items, addItem, removeItem }) {
   const [addMode, setAddMode] = useState(false);
 
   const headers = {
@@ -38,9 +39,7 @@ export function RetroColumn({ type, items, addItem }) {
       </div>
       {addMode && <RetroInput onClose={() => setAddMode(false)} onSubmit={text => handleAdd(text)} />}
       {items.map(item => (
-        <div key={item.id} className="notification is-info-light">
-          {item.text}
-        </div>
+        <RetroItem key={item.id} item={item} onRemove={() => removeItem(item.id)} />
       ))}
     </Fragment>
   );

@@ -39,6 +39,7 @@ export function ActiveRetro({ playerName, retroId }) {
             <RetroColumn
               type={COLUMN_TYPES.KEEP_DOING}
               addItem={text => socket.addItem(text, COLUMN_TYPES.KEEP_DOING)}
+              removeItem={id => socket.removeItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.KEEP_DOING}`, [])}
             />
           </div>
@@ -46,6 +47,7 @@ export function ActiveRetro({ playerName, retroId }) {
             <RetroColumn
               type={COLUMN_TYPES.STOP_DOING}
               addItem={text => socket.addItem(text, COLUMN_TYPES.STOP_DOING)}
+              removeItem={id => socket.removeItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.STOP_DOING}`, [])}
             />{' '}
           </div>
@@ -53,6 +55,7 @@ export function ActiveRetro({ playerName, retroId }) {
             <RetroColumn
               type={COLUMN_TYPES.START_DOING}
               addItem={text => socket.addItem(text, COLUMN_TYPES.START_DOING)}
+              removeItem={id => socket.removeItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.START_DOING}`, [])}
             />{' '}
           </div>

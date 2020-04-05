@@ -49,6 +49,12 @@ export function getRetroSocketRouter(expressWs) {
             { text: message.text, playerId, id: uuidv4() }
           ];
           break;
+        case 'REMOVE_ITEM':
+          console.log(`Retro ${retro.id}: ${playerId} removing item ${message.itemId}`);
+          Object.keys(retro.columns).forEach(columnName => {
+            retro.columns[columnName] = retro.columns[columnName].filter(item => item.id !== message.itemId);
+          });
+          break;
         default:
           console.log('got message', message);
           shouldBroadcast = false;
