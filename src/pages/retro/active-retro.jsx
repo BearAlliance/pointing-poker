@@ -38,24 +38,31 @@ export function ActiveRetro({ playerName, retroId }) {
           <div className="column">
             <RetroColumn
               type={COLUMN_TYPES.KEEP_DOING}
+              myPlayerId={playerName}
               addItem={text => socket.addItem(text, COLUMN_TYPES.KEEP_DOING)}
               removeItem={id => socket.removeItem(id)}
+              onLikeItem={id => socket.likeItem(id)}
+              onUnlikeItem={id => socket.unlikeItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.KEEP_DOING}`, [])}
             />
           </div>
           <div className="column">
             <RetroColumn
               type={COLUMN_TYPES.STOP_DOING}
+              myPlayerId={playerName}
               addItem={text => socket.addItem(text, COLUMN_TYPES.STOP_DOING)}
               removeItem={id => socket.removeItem(id)}
+              voteForItem={id => socket.voteForItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.STOP_DOING}`, [])}
             />{' '}
           </div>
           <div className="column">
             <RetroColumn
               type={COLUMN_TYPES.START_DOING}
+              myPlayerId={playerName}
               addItem={text => socket.addItem(text, COLUMN_TYPES.START_DOING)}
               removeItem={id => socket.removeItem(id)}
+              voteForItem={id => socket.voteForItem(id)}
               items={get(retro, `columns.${COLUMN_TYPES.START_DOING}`, [])}
             />{' '}
           </div>

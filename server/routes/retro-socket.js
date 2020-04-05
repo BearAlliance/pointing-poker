@@ -46,7 +46,7 @@ export function getRetroSocketRouter(expressWs) {
           console.log(`Retro ${retro.id}: ${playerId} adding item to ${message.column}`);
           retro.columns[message.column] = [
             ...(retro.columns[message.column] || []),
-            { text: message.text, playerId, id: uuidv4() }
+            { text: message.text, playerId, id: uuidv4(), votes: [] }
           ];
           break;
         case 'REMOVE_ITEM':
@@ -55,6 +55,32 @@ export function getRetroSocketRouter(expressWs) {
             retro.columns[columnName] = retro.columns[columnName].filter(item => item.id !== message.itemId);
           });
           break;
+        case 'LIKE_ITEM':
+          console.log(`Retro ${retro.id}: ${playerId} liking item ${message.itemId}`);
+          Object.keys(retro.columns).forEach(columnName => {
+            retro.columns[columnName] = retro.columns[columnName].map(item => {
+              if (item.id === message.itemId) {
+                item.votes.push({ playerId });
+              }
+              return item;
+            });
+          });
+          break;
+        case 'UNLIKE_ITEM':
+          console.log(`Retro ${retro.id}: ${playerId} unliking item ${message.itemId}`);
+          Object.keys(retro.columns).forEach(columnName => {
+            retro.columns[columnName] = retro.columns[columnName].map(item => {
+              if (item.id === message.itemId) {
+                console.log(item);
+                console.log(playerId);
+                item.votes = item.votes.filter(vote => vote.playerId !== playerId);
+                console.log(item);
+              }
+              return item;
+            });
+          });
+          break;
+
         default:
           console.log('got message', message);
           shouldBroadcast = false;

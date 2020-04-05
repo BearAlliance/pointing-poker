@@ -6,7 +6,7 @@ import { RetroItem } from './retro-item';
 
 export const COLUMN_TYPES = { KEEP_DOING: 'keepDoing', STOP_DOING: 'stopDoing', START_DOING: 'startDoing' };
 
-export function RetroColumn({ type, items, addItem, removeItem }) {
+export function RetroColumn({ type, items, addItem, removeItem, onLikeItem, onUnlikeItem, myPlayerId }) {
   const [addMode, setAddMode] = useState(false);
 
   const headers = {
@@ -39,7 +39,14 @@ export function RetroColumn({ type, items, addItem, removeItem }) {
       </div>
       {addMode && <RetroInput onClose={() => setAddMode(false)} onSubmit={text => handleAdd(text)} />}
       {items.map(item => (
-        <RetroItem key={item.id} item={item} onRemove={() => removeItem(item.id)} />
+        <RetroItem
+          key={item.id}
+          item={item}
+          onRemove={() => removeItem(item.id)}
+          onLike={() => onLikeItem(item.id)}
+          onUnlike={() => onUnlikeItem(item.id)}
+          hasVoted={item.votes.some(i => i.playerId === myPlayerId)}
+        />
       ))}
     </Fragment>
   );
