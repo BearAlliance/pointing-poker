@@ -69,7 +69,7 @@ export function getRetroSocketRouter(expressWs) {
         case 'UNLIKE_ITEM':
           console.log(`Retro ${retro.id}: ${playerId} unliking item ${message.itemId}`);
           Object.keys(retro.columns).forEach(columnName => {
-            retro.columns[columnName] = retro.columns[columnName].map(item => {
+            retro.columns[columnName].forEach(item => {
               if (item.id === message.itemId) {
                 console.log(item);
                 console.log(playerId);
