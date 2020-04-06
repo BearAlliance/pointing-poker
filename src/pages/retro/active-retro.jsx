@@ -3,18 +3,24 @@ import get from 'lodash.get';
 import { COLUMN_TYPES, RetroColumn } from './retro-column';
 import { RetroSocket } from '../../websocket-client';
 import { InviteLink } from '../../components/invite-link';
+import { SocketDisconnectWarning } from '../../components/socket-disconnect-warning';
 
 let socket;
 
 export function ActiveRetro({ playerName, retroId }) {
   const [retro, setRetro] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     socket = new RetroSocket(retroId, playerName, 'retro', {
       onMessage: data => {
-        setRetro(data.retro);
+        if (data.error) {
+          setError(true);
+        } else {
+          setRetro(data.retro);
+        }
       },
-      onClose: () => console.log('closing')
+      onClose: () => setError(true)
     });
     socket.connect();
     return function cleanup() {
@@ -27,6 +33,7 @@ export function ActiveRetro({ playerName, retroId }) {
   if (retro)
     return (
       <Fragment>
+        {error && <SocketDisconnectWarning />}
         {retro.players.length === 1 && (
           <div className="notification is-info is-light">
             You look lonely. Invite some friends with this link:{' '}
