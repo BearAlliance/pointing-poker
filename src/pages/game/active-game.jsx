@@ -5,6 +5,7 @@ import { StoryTitleSection } from './story-title-section';
 import { VotingButtons } from './voting-buttons';
 import { PokerSocket } from '../../websocket-client';
 import { ObserverSwitch } from './observer-switch';
+import { SocketDisconnectWarning } from '../../components/socket-disconnect-warning';
 
 let socket;
 
@@ -52,12 +53,7 @@ export function ActiveGame({ playerId, gameId }) {
   return (
     <Fragment>
       <div className="column is-one-third">
-        {error && (
-          <div className="notification is-danger">
-            <button className="delete" onClick={() => setError(false)} />
-            Socket connection lost. Please refresh the page
-          </div>
-        )}
+        {error && <SocketDisconnectWarning />}
         <Fragment>
           <StoryTitleSection value={(game && game.title) || ''} onChange={e => socket.updateTitle(e.target.value)} />
           <hr />
