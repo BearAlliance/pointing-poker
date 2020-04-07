@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
+import { ParticipantContext } from '../../contexts/participant-context';
+import { Gravatar } from '../../components/gravatar';
 
 export function RetroItem({ item, onRemove, onLike, onUnlike, hasVoted }) {
+  const { participants } = useContext(ParticipantContext);
   const [isTrashHover, setIsTrashHover] = useState(null);
   const [isVoteHover, setIsVoteHover] = useState(null);
+
+  console.log('players', participants);
+
+  const me = participants.find(participant => participant.name === item.playerId);
+  const emailHash = me ? me.emailHash : '';
 
   return (
     <div className="box">
       <div className="media">
+        <div className="media-left">
+          <Gravatar size="md" hash={emailHash} />
+        </div>
         <div className="media-content">
           <p>
             <strong>{item.playerId}</strong>
@@ -16,7 +27,7 @@ export function RetroItem({ item, onRemove, onLike, onUnlike, hasVoted }) {
         </div>
       </div>
       <div className="has-text-grey columns has-text-right">
-        <div className="column is-two-thirds" />
+        <div className="column is-one-half" />
         <div className="column">
           <span className="icon">
             <i

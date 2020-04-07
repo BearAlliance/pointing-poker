@@ -88,7 +88,7 @@ export function GameStats({ players }) {
           <p>Game Stats</p>
         </div>
         <div className="message-body">
-          <table className="table">
+          <table className="table is-fullwidth">
             <tbody>
               <tr>
                 <td>Average</td>

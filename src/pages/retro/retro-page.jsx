@@ -4,12 +4,13 @@ import { RetroNotFound } from './retro-not-found';
 import { AddPlayer } from '../../components/add-player';
 import { RetroTitle } from './retro-title';
 import { ActiveRetro } from './active-retro';
+import { ParticipantProvider } from '../../contexts/participant-context';
 
 export default function RetroPage({ match }) {
   const [currentRetroId, setCurrentRetroId] = useState(null);
   const [hasError, setHasError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [playerName, setPlayerName] = useState(null);
+  const [playerInfo, setPlayerInfo] = useState(null);
 
   useEffect(() => {
     const { retroId } = match.params;
@@ -49,7 +50,7 @@ export default function RetroPage({ match }) {
   if (currentRetroId) {
     return (
       <div>
-        {!playerName && (
+        {!playerInfo && (
           <Fragment>
             <RetroTitle retroId={currentRetroId} />
             <div className="column">
@@ -58,8 +59,8 @@ export default function RetroPage({ match }) {
                   <AddPlayer
                     type="retro"
                     id={currentRetroId}
-                    onSubmit={playerName => {
-                      setPlayerName(playerName);
+                    onSubmit={playerInfo => {
+                      setPlayerInfo(playerInfo);
                     }}
                   />
                 </div>
@@ -67,7 +68,11 @@ export default function RetroPage({ match }) {
             </div>
           </Fragment>
         )}
-        {playerName && <ActiveRetro retroId={currentRetroId} playerName={playerName} />}
+        {playerInfo && (
+          <ParticipantProvider>
+            <ActiveRetro retroId={currentRetroId} emailHash={playerInfo.emailHash} playerName={playerInfo.playerId} />
+          </ParticipantProvider>
+        )}
       </div>
     );
   }

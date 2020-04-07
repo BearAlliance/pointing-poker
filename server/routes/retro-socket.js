@@ -26,7 +26,7 @@ export function getRetroSocketRouter(expressWs) {
         case 'JOIN':
           if (isNameAvailable(playerId, retro.players)) {
             console.log(`Retro ${retro.id}: adding player ${playerId}`);
-            retro.players.push({ name: playerId });
+            retro.players.push({ name: playerId, emailHash: message.emailHash });
             ws.retroId = retro.id; // assign the retroId to this connection for filtering during broadcast
             ws.player = playerId;
           } else {

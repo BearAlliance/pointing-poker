@@ -1,13 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import get from 'lodash.get';
 import { COLUMN_TYPES, RetroColumn } from './retro-column';
 import { RetroSocket } from '../../websocket-client';
 import { InviteLink } from '../../components/invite-link';
 import { SocketDisconnectWarning } from '../../components/socket-disconnect-warning';
+import { ParticipantContext } from '../../contexts/participant-context';
+import { RetroParticipants } from './retro-participants';
 
 let socket;
 
-export function ActiveRetro({ playerName, retroId }) {
+export function ActiveRetro({ playerName, emailHash, retroId }) {
+  const { setParticipants } = useContext(ParticipantContext);
   const [retro, setRetro] = useState(null);
   const [error, setError] = useState(null);
 
@@ -18,15 +21,16 @@ export function ActiveRetro({ playerName, retroId }) {
           setError(true);
         } else {
           setRetro(data.retro);
+          setParticipants(data.retro.players);
         }
       },
       onClose: () => setError(true)
     });
-    socket.connect();
+    socket.connect(emailHash);
     return function cleanup() {
       socket.disconnect();
     };
-  }, [playerName, retroId]);
+  }, [emailHash, playerName, retroId, setParticipants]);
 
   console.log('retro', retro);
 
@@ -40,7 +44,9 @@ export function ActiveRetro({ playerName, retroId }) {
             <InviteLink id={retroId} type="retro" showHref={true} />{' '}
           </div>
         )}
-        {retro.players.length > 1 && <div>Participants: {retro.players.map(player => player.name).join(', ')}</div>}
+        <div className="container">
+          <RetroParticipants />
+        </div>
         <div className="columns">
           <div className="column">
             <RetroColumn

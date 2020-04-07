@@ -24,7 +24,7 @@ export function getPokerSocketRouter(expressWs) {
         case 'JOIN':
           if (isNameAvailable(message.playerId, game.players)) {
             console.log(`Game ${game.id}: adding player ${message.playerId}`);
-            game.players.push({ name: message.playerId, isGuest: message.isGuest });
+            game.players.push({ name: message.playerId, emailHash: message.emailHash });
             ws.gameId = game.id; // assign the gameId to this connection for filtering during broadcast
             ws.player = message.playerId;
           } else {

@@ -6,8 +6,7 @@ import { ActiveGame } from './active-game';
 import { Loading } from '../../loading/loading';
 
 export default function GamePage({ match }) {
-  const [playerId, setPlayerId] = useState(null);
-  const [isGuest, setIsGuest] = useState(null);
+  const [playerInfo, setPlayerInfo] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [hasError, setHasError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -48,23 +47,22 @@ export default function GamePage({ match }) {
     <div data-testid="game-page">
       <GameTitle gameId={gameId} />
       <div className="columns">
-        {!playerId && (
+        {!playerInfo && (
           <div className="column">
             <div className="hero">
               <div className="hero-body">
                 <AddPlayer
                   type="game"
                   id={gameId}
-                  onSubmit={(playerId, isGuest) => {
-                    setPlayerId(playerId);
-                    setIsGuest(isGuest);
+                  onSubmit={playerInfo => {
+                    setPlayerInfo(playerInfo);
                   }}
                 />
               </div>
             </div>
           </div>
         )}
-        {playerId && <ActiveGame playerId={playerId} gameId={gameId} isGuest={isGuest} />}
+        {playerInfo && <ActiveGame playerId={playerInfo.playerId} gameId={gameId} emailHash={playerInfo.emailHash} />}
       </div>
     </div>
   );

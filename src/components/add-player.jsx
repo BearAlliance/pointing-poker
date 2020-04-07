@@ -2,12 +2,17 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
 import { TextInputWithButton } from '../inputs/text-with-button';
+import { GravatarInput } from '../inputs/gravatar-input';
+import { getHashFromEmail, getRandomHash } from './gravatar';
 
 export function AddPlayer({ id, onSubmit, type }) {
   function handleSubmit(values, { setSubmitting, setFieldError }) {
-    const playerId = values.firstName;
+    const { name, email } = values;
 
-    fetch(`/api/${type}/${id}/${playerId}/available`)
+    // Default to random if they don't enter anything
+    const emailHash = email !== '' ? getHashFromEmail(email) : getRandomHash();
+
+    fetch(`/api/${type}/${id}/${name}/available`)
       .then(res => {
         if (!res.ok) {
           return Promise.reject(res);
@@ -17,14 +22,14 @@ export function AddPlayer({ id, onSubmit, type }) {
       .then(res => res.json())
       .then(res => {
         if (res.available) {
-          onSubmit(playerId, values.isGuest);
+          onSubmit({ playerId: name, emailHash });
         } else {
-          setFieldError('firstName', 'Name already taken, try another');
+          setFieldError('name', 'Name already taken, try another');
           setSubmitting(false);
         }
       })
       .catch(err => {
-        setFieldError('firstName', 'Error joining, try again');
+        setFieldError('name', 'Error joining, try again');
         setSubmitting(false);
       });
   }
@@ -32,23 +37,24 @@ export function AddPlayer({ id, onSubmit, type }) {
   return (
     <div data-testid="add-player">
       <Formik
-        initialValues={{ firstName: '' }}
+        initialValues={{ name: '', email: '' }}
         validationSchema={Yup.object({
-          firstName: Yup.string()
+          name: Yup.string()
             .max(15, 'Must be 15 characters or less')
             .required('Required')
         })}
         onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <TextInputWithButton name="firstName" label="Name" buttonLabel="Join" loading={isSubmitting} />
-            <ErrorMessage name="firstName">
+            <TextInputWithButton name="name" label="Name" buttonLabel="Join" loading={isSubmitting} />
+            <ErrorMessage name="name">
               {msg => (
                 <div data-testid="join-error" className="has-text-danger">
                   {msg}
                 </div>
               )}
             </ErrorMessage>
+            <GravatarInput name="email" />
           </Form>
         )}
       </Formik>
