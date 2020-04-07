@@ -19,10 +19,10 @@ export class WebSocketClient {
     this.registerListeners();
   }
 
-  connect() {
+  connect(emailHash) {
     this.client.onopen = () => {
       if (this.client.readyState === this.client.OPEN) {
-        this.client.send(this.createMessage('JOIN'));
+        this.client.send(this.createMessage('JOIN', { emailHash }));
       } else {
         console.error('WebSocket not ready yet... we shouldnt be here, if we are, we might need a setTimeout');
       }

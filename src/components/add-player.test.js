@@ -17,7 +17,7 @@ describe('Add Player', () => {
   test('shows error if name is too long', async () => {
     await doRender();
     await wait(() => {
-      fireEvent.change(screen.getByTestId('text-input-firstName'), { target: { value: 'More than 15 characters' } });
+      fireEvent.change(screen.getByTestId('text-input-name'), { target: { value: 'More than 15 characters' } });
       fireEvent.click(screen.getByText('Join'));
     });
 
@@ -35,7 +35,7 @@ describe('Add Player', () => {
     );
 
     await wait(() => {
-      fireEvent.change(screen.getByTestId('text-input-firstName'), { target: { value: 'Bobby' } });
+      fireEvent.change(screen.getByTestId('text-input-name'), { target: { value: 'Bobby' } });
       fireEvent.click(screen.getByText('Join'));
     });
 

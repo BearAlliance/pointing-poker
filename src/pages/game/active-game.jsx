@@ -9,7 +9,7 @@ import { SocketDisconnectWarning } from '../../components/socket-disconnect-warn
 
 let socket;
 
-export function ActiveGame({ playerId, gameId }) {
+export function ActiveGame({ playerId, gameId, emailHash }) {
   const [game, setGame] = useState(null);
   const [isGuest, setIsGuest] = useState(false);
   const [error, setError] = useState(null);
@@ -31,7 +31,7 @@ export function ActiveGame({ playerId, gameId }) {
       onClose: () => setError(true),
       onError: () => setError(true)
     });
-    socket.connect();
+    socket.connect(emailHash);
     return function cleanup() {
       socket.disconnect();
     };
