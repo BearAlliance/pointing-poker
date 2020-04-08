@@ -43,7 +43,7 @@ export function RetroItem({ item, onRemove, onLike, onUnlike, hasVoted }) {
               onClick={() => (hasVoted ? onUnlike() : onLike())}
             />
           </span>
-          {item.votes.length}
+          <span title={`Liked by: ${item.votes.map(vote => vote.playerId)}`}>{item.votes.length}</span>
         </div>
         <div className="column">
           <span className="icon">
