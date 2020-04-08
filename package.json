@@ -11,6 +11,7 @@
     "http-errors": "^1.7.3",
     "lodash.isequal": "^4.5.0",
     "morgan": "^1.9.1",
+    "uuid": "^7.0.3",
     "websocket": "^1.0.31"
   },
   "scripts": {
@@ -64,6 +65,8 @@
     "concurrently": "^5.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
+    "eslint-import-resolver-node": "^0.3.3",
+    "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react": "^7.19.0",
     "formik": "^2.1.4",
     "husky": "^4.2.3",
@@ -78,7 +81,6 @@
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "uuid": "^7.0.3",
     "yup": "^0.28.3"
   },
   "husky": {
