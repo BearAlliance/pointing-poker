@@ -9,7 +9,7 @@ Everything's made up, but the points still matter
 
 ## Why
 
-[Planing poker](https://en.wikipedia.org/wiki/Planning_poker) is a useful tool for both remote and co-located teams.
+[Planning poker](https://en.wikipedia.org/wiki/Planning_poker) is a useful tool for both remote and co-located teams.
 
 Other services already exist, but they are either paid or slightly dated, with no option for self-hosting.
 
