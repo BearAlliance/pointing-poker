@@ -12,7 +12,7 @@ export function GameTitle({ gameId }) {
         </div>
       </div>
       <div className="is-hidden-desktop is-size-4">
-        Planning Poker <InviteLink gameId={gameId} type="game" />
+        Planning Poker <InviteLink id={gameId} type="game" />
       </div>
     </Fragment>
   );
